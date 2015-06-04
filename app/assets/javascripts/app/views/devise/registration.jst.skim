@@ -1,0 +1,55 @@
+.modal-window-module.sk-modal-window
+  .st-unitRight.o-close-icon.sk-close-icon.mfp-close
+  .sk-modal-title Быстрая регистрация на zaglohla.ru
+  .sk-user-card-title.d4-soft-top.d2-push-top.d-grid-wrapper
+    form#new_user.new_user.js-devise-registration-form accept-charset="UTF-8" action="/users.json" method="post" data-remote="true"
+      .d-grid.size1of2.d-grid-wrapper
+        input#user_email.sk-main-input.o-main-input.d-grid.size4of5  autofocus="autofocus" placeholder="Имя" name="user[name]" type="text"
+      .d-grid.size1of2
+        .sk-helper-text.d2-push-top
+          | Ваше имя на сайте
+      .clear
+
+      .d-grid.size1of2.d2-push-top.d-grid-wrapper
+        input#user_name.sk-main-input.o-main-input.d-grid.size4of5 autofocus="autofocus" name="user[email]" type="email" placeholder="Email" value=""
+        .clear
+      .d-grid.size1of2
+        .sk-helper-text.d2-push-top
+          | На ваш email мы вышлем ссылку - подтверждение регистрации
+      .clear
+      .d-grid.size1of2.d2-push-top.d-grid-wrapper
+        input#user_password.sk-main-input.o-main-input.d-grid.size4of5 name="user[password]" type="password" placeholder="Пароль"
+        .clear
+      .d-grid.size1of2
+        .sk-helper-text.d4-push-top
+          | Ваш пароль для входа на сайт
+      .clear
+      .d-grid.size1of2.d2-push-top.d-grid-wrapper
+        input#user_password_confirmation.sk-main-input.o-main-input.d-grid.size4of5 name="user[password_confirmation]" type="password" placeholder="Подтверждение пароля"
+        .clear
+      .clear
+      .d2-push-top
+        .o-checkbox-wrapper.st-unitLeft.push-top
+          input.o-checkbox-input.sk-checkbox-input type="checkbox" name="user[remember_me]" value="1" checked='checked'
+          .o-checkbox-ic.sk-checkbox-ic.st-unitLeft.st-bl
+          label.sk-checkbox-label.push-left.st-unitLeft for="user_remember_me"
+            | Я прочитал и согласен с
+        a.sk-checkbox-label.sk-blue-decorated-link.push-sides.st-unitLeft.push-top target="_blank" href="/pages/terms" Пользовательским соглашением
+        .clear
+        .st-unitRight
+          input name="commit" type="submit" value="Ok" class="o-modal-button sk-orange-button"
+        .clear
+      .d7-push-top.sk-modal-title.d2-soft-bottom А можно еще быстрее!!
+
+      .sk-user-card-title.d-grid-wrapper
+        .d-grid.size1of2
+          .d4-push-top
+            a.o-modal-button.sk-blue-button.sk-social-entry-button.sk-align-ct.st-bl href="/users/auth/vkontakte?rpath=#{window.location.href.split("?")[0]}"
+              | Регистрация Вконтакте
+          .d2-push-top
+            a.o-modal-button.sk-blue-button.sk-social-entry-button.sk-align-ct.st-bl href="/users/auth/facebook?rpath=#{window.location.href.split("?")[0]}"
+              | Регистрация Facebook
+        .d-grid.size1of2
+          .sk-helper-text.d4-push-top
+            | При регистрации через социальные сети не нужно активмпрваит аккаунт по e-mail и загружать аватар
+        .clear

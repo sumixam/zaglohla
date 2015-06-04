@@ -1,0 +1,9 @@
+= form_for @manufacture_cert, url: @manufacture_cert.new_record? ? admin_manufacture_certs_path : admin_manufacture_cert_path(@manufacture_cert), :html => { :class => "form-horizontal" } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_manufacture_certs_path, :class => 'btn'

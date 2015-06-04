@@ -1,0 +1,5 @@
+- for i in @metros
+  .push-sides
+    input type="checkbox" name="cto[cto_metro_stations_attributes][][metro_id]" value="#{i.id}"
+    span.check-special
+      = i.name

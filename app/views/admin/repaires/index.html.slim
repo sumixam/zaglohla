@@ -1,0 +1,46 @@
+div class="page-header"
+  h1
+    = "Оценка Ремонта"
+.js-admin-repair
+  form
+    .clear
+    .st-unitLeft
+      select.js-car-brand.js-select2 style="width: 200px"
+        - CarBrand.order(:name).all.each do |s|
+          option value="#{s.id}"
+            = s.name
+      br
+      br
+      select.js-car-model.js-select2 style="width: 200px"
+      br
+      br
+      select.js-car-generation.js-select2 style="width: 200px"
+      br
+      br
+      select.js-car-engine.js-select2 style="width: 200px"
+      br
+      br
+    .st-unitRight
+      select.js-repair-work-sector.js-select2 style="width: 200px"
+        - RepairWorkSector.order(:name).all.each do |s|
+          option value="#{s.id}"
+            = s.name
+      br
+      br
+      select.js-repair-work-type.js-select2 style="width: 200px"
+      br
+      br
+      select.js-repair-work-job.js-select2 style="width: 200px"
+      br
+      br
+    .clear
+    button.js-calc
+      | Посчитать
+  .clear
+  h2
+    = "Оценка ремонта: "
+    span.js-result
+
+
+coffee:
+  new App.AdminRepairList(el: $('.js-admin-repair'))

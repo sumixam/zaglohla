@@ -1,0 +1,16 @@
+- @car_engines.each do |ce|
+  tr
+    td
+      .st-unitLeft.d2-push-sides data-status="opened" data-cid="#{ce.id}"
+        | -
+      .st-unitLeft.d2-push-sides
+        input.js-rm-all type="checkbox" name="ce-#{ce.id}" value="#{ce.id}" data-btype="engine"
+    td colspan="4"
+      | &nbsp;
+    td
+      strong
+        = ce.name
+    td
+      = link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_engine_brand_path(ce), :class => 'btn btn-mini'
+      '
+      = link_to t('.destroy', :default => t("helpers.links.destroy")), admin_engine_brand_path(ce), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'

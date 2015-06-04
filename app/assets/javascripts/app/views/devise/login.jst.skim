@@ -1,0 +1,40 @@
+.modal-window-module.sk-modal-window
+  .st-unitRight.o-close-icon.sk-close-icon.mfp-close
+  .sk-modal-title Вход на сайт
+  .sk-user-card-title.d4-soft-top.d2-push-top.d-grid-wrapper
+    form#new_user.new_user.js-devise-login-form accept-charset="UTF-8" action="/users/sign_in" method="post" data-remote="true"
+      .d-grid.size1of2.d3-soft-left.d2-soft-bottom.sk-modal-half-bordered.d-grid-wrapper
+
+        .d2-push-top
+          input#user_email.sk-main-input.o-main-input.d-grid.size9of10 autofocus="autofocus" name="user[email]" type="email" value="" placeholder="Email"
+          .clear
+        .d3-push-top
+          input#user_password.sk-main-input.o-main-input.d-grid.size9of10  name="user[password]" type="password" placeholder="Пароль"
+          .clear
+      .d-grid.size1of2.d4-soft-left
+        .d2-push-top
+          a.o-entry-button.sk-social-entry-button.st-social-entry-button.sk-blue-button.sk-align-ct href="/users/auth/facebook?rpath=#{window.location.href.split("?")[0]}"
+            | Войти через Facebook
+
+        .d3-push-top
+          a.o-entry-button.sk-social-entry-button.st-social-entry-button.sk-blue-button.sk-align-ct href="/users/auth/vkontakte?rpath=#{window.location.href.split("?")[0]}"
+            | Войти через ВКонтакте
+
+
+      .clear
+      .d2-push-top.d3-soft-left
+        .st-unitLeft.d5-push-right
+          input name="user[remember_me]" type="hidden" value="0"
+            .o-checkbox-wrapper
+              input#user_remember_me.o-checkbox-input.sk-checkbox-input type="checkbox" name="user[remember_me]" value="1" checked='checked'
+              .o-checkbox-ic.sk-checkbox-ic.st-unitLeft.st-bl
+              label.sk-checkbox-label.push-left.st-unitLeft for="user_remember_me"
+                | Запомнить меня
+              .clear
+
+        a.st-unitLeft.sk-blue-decorated-link.sk-link-forget href="/users/password/new"
+          | Забыли пароль?
+        .clear
+      .d5-push-top.sk-align-ct
+        input.o-modal-button.block.sk-blue-button name="commit" type="submit" value="Войти"
+        .clear

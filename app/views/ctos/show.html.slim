@@ -1,0 +1,414 @@
+.cto-card-module.d-grid-wrapper.d4-soft-top.js-cto-card data-cto="#{@cto.id}" data-name="#{@cto.name}"
+  .d-grid.size7of10
+    .sk-search-light-form.d3-soft
+      .d2-push-bottom.st-unitRight
+        span.bold
+          = "Экспертный рейтинг: #{@cto.expert_rating}"
+      .d-grid.size7of10
+        .sk-search-form-title.d2-soft-ends
+          = @cto.name
+        - if @cto.official_diler
+          .d2-push-bottom
+            span.light
+              | * Официальный дилер
+        .d2-push-bottom
+          span.light
+            = [@cto.city.try(:name), @cto.adress_street, @cto.adress_buildng, @cto.adress_additional].compact.join(", ")
+            - unless @cto.adress_comment.blank?
+              br
+              = @cto.adress_comment
+        - if @cto.metro_stations.count > 0
+          .d2-push-bottom.js-show-shared-container
+            span.bold.push-right
+              | Метро:
+            span.light
+              = @cto.metro_stations.map(&:name).uniq.join(", ")
+        - if @cto.districts.count > 0
+          .d2-push-bottom.js-show-shared-container
+            span.bold.push-right
+              | Район:
+            span.light
+              = @cto.districts.map(&:name).uniq.join(", ")
+        .d2-push-bottom
+          | &nbsp;
+        - if @cto.phone.present?
+          .d2-push-bottom.js-show-shared-container
+            span.bold.push-right
+              | Телефон:
+            a.sk-blue-decorated-link.js-show-shared.js-phone-hide href="#phone"
+              | Показать
+            span.hidden.js-shared
+              = @cto.phone
+        - [1,2,3].each do |i|
+          - if @cto.send("additional_phone_#{i}").present?
+            .d2-push-bottom.js-show-shared-container
+              span.bold.push-right
+                | Доп. Телефон:
+              a.sk-blue-decorated-link.js-show-shared.js-phone-hide href="#phone"
+                | Показать
+              span.hidden.js-shared
+                = @cto.send("additional_phone_#{i}")
+        - if @cto.site.present?
+          .d2-push-bottom
+            span.bold.push-right
+              | Сайт:
+            a.sk-blue-decorated-link.js-site-link href="#{@cto.site}" target="_blank"
+              = @cto.site
+
+        - if @cto.vk_page.present?
+          .d2-push-bottom.js-show-shared-container
+            span.bold.push-right
+              | ВКонтакте:
+            a.sk-blue-decorated-link.js-vk-link href="#{@cto.vk_page}" target="_blank"
+              | Переход на страницу VK
+        - if @cto.payment_any?
+          .d2-push-bottom
+            span.bold.push-right
+              | Оплата:
+            span.light
+              = @cto.plain_payment
+
+      .d-grid.size3of10.sk-align-rt
+        - weeks = ['пн', 'вт', 'ср', 'чт', 'пт', 'cб', 'вс']
+        - delete_days = []
+        - if @cto.work_hours.count > 0
+          .sk-middle-title.bold.d2-push-bottom Режим работы
+          - @cto.work_hours.each do |wh|
+            .push-bottom
+              - if wh.weekday_start == wh.weekday_finish
+                - if wh.time_start == "0:00" && wh.time_finish == "23:00"
+                  = "#{wh.weekday_start} - круглосуточно"
+                - else
+                  = "#{wh.weekday_start} #{wh.time_start} - #{wh.time_finish}"
+              - else
+                - if wh.time_start == "0:00" && wh.time_finish == "23:00"
+                  = "#{wh.weekday_start} - #{wh.weekday_finish} круглосуточно"
+                - else
+                  = "#{wh.weekday_start} - #{wh.weekday_finish} #{wh.time_start} - #{wh.time_finish}"
+              - (weeks.find_index(wh.weekday_start)..weeks.find_index(wh.weekday_finish)).each{|i| delete_days << weeks[i]}
+          - if (weeks - delete_days).length > 0
+            = "#{(weeks - delete_days).join(", ")} — выходной"
+
+      .clear
+      .d4-push-top
+        / a.st-unitLeft.sk-blue-decorated-link href="/"
+        /   | Добавить в блокнот
+        / a.st-unitLeft.sk-blue-decorated-link.d2-push-left href="/"
+        /   | Нравится
+        button.o-big-button.sk-blue-button.st-unitRight.js-send-mail
+          | Отправить онлайн заявку
+        .clear
+    .d-grid-wrapper.d4-soft-ends.sk-cto-results-block
+      .d-grid.size1of8
+        .d3-push-left.sk-special-price-icon.o-special-price-icon
+      .d-grid.size7of8
+        - if @cto.cto_shares.count > 0
+          .d2-push-ends.sk-middle-title.bold
+            | Действующие акции:
+          ul.d4-push-top
+            - @cto.cto_shares.each do |cs|
+              li
+                .d6-push-bottom
+
+                  .sk-cto-special-offers.d2-soft-bottom
+                    = " #{cs.description}"
+
+                  .sk-cto-special-title.push-top.st-unitLeft.d3-push-left
+                    - if cs.anytime
+                      span
+                        | Всегда
+                    - else
+                      - unless cs.from_date.blank?
+                        span
+                          | с #{cs.from_date_formated}
+                      - unless cs.to_date.blank?
+                        span.push-left
+                          | до #{cs.to_date_formated}
+                  .clear
+        - else
+          .d2-push-ends.sk-middle-title.bold
+            | Действующие акции: Нет
+
+        ul.st-cto-card-promo
+          li.sk-cto-card-promo-items.push-bottom
+
+      .clear
+
+    #cto_tabs.st-cto-card-tab-block.js-cto-tabs.ionTabs.sk-cto-tabs data-name="cto-tabs"
+
+      ul.st-cto-card-tab-header.ionTabs__head
+        li.st-cto-card-tab.ionTabs__tab data-target="tabs-1"
+          | Специализации
+        li.st-cto-card-tabs.ionTabs__tab data-target="tabs-2"
+          | Об СТО
+        - if @cto.pricelists.count > 0 && !@cto.cto_pricelist.blank?
+          li.st-cto-card-tabs.ionTabs__tab data-target="tabs-3"
+            | Прайс-лист
+        li.st-cto-card-tabs.ionTabs__tab data-target="tabs-4"
+          | Отзывы
+      .st-cto-card-tab-body.ionTabs__body
+
+        .st-cto-card-tab-container.ionTabs__item data-name="tabs-1"
+          .st-cto-tab-1
+            - if @cto.car_brands.count > 0
+              .sk-middle-title.bold.d2-push-ends
+                | Специализации по маркам:
+              .d7-push-bottom.sk-cto-results-block.d-grid-wrapper
+                - if @cto.car_brands.uniq.count < 8
+                  .d2-push-top.d2-push-bottom.light
+                    | СТО специлизируется на марках в списке ниже
+                    .st-in-bl.sk-question-icon.o-question-icon.js-about-certificated.d2-push-left.d2-push-top href="javascript:void(0)"
+                      span.o-question-symb
+                        | ?
+                - if @cto.work_with_other_brands
+                  .d2-push-top.d2-push-bottom.light
+                    | Возможна работа с автомобилями с марками, вне списка
+                - @cto.category_autos.uniq.each do |ca|
+                  - if @cto.brand_list_item(ca.id).present?
+                    - ca_list = @cto.brand_list_item(ca.id)
+                    - ca_type = ca_list.shift
+                    .d2-push-top
+                      .bold.st-in-bl
+                        = "#{ca.name}: "
+                      .st-in-bl.push-left class="#{ca_type == "list" ? "size1of1" : ""}"
+                        - if ca_type == "any"
+                          span
+                            | любые марки
+                        - if ca_type == "native"
+                          span
+                            | отечественные
+                        - if ca_type == "foreighn"
+                          span
+                            | иномарки
+                        - else
+                          - if ca_type == "anyexpect"
+                            span
+                              | любые марки, кроме
+                              = " "+ca_list.uniq().join(", ")+"."
+                          - else
+                            ul.d4-push-right.d2-push-top.size1of1
+                              - ca_list.each_with_index do |cb, index|
+                                li.d-grid.size1of4.d-grid-wrapper.sk-small-list
+                                  .d-grid.size1of17
+                                    | -
+                                  .d-grid.size16of17
+                                    = cb
+                                  .clear
+                                - if index % 4 == 3
+                                  li.clear
+                    .clear
+                .clear
+            - if @cto.job_types.count > 0
+              .sk-middle-title.bold.d2-push-bottom
+                | Виды работ:
+              .d4-push-bottom.sk-cto-results-block.d2-push-top.d-grid-wrapper
+                ul.st-unitLeft.d4-push-right.d2-push-top.size1of1.st-column-left-side
+                  - @cto.job_types.uniq.each_with_index do |cb, index|
+                    li.d4-push-bottom
+                      span.bold
+                        = cb.name
+                      ul.d2-push-left.push-top
+                        - @cto.sub_job_types.where(job_type_id: cb.id).each do |c|
+                            li.push-bottom.sk-small-list.d-grid-wrapper
+                              .d-grid.size1of20
+                                | -
+                              .d-grid.size19of20
+                                = c.name
+                              .clear
+                    - if index % 3 == 2
+                      .clear
+                .clear
+                - if @cto.other_job_types.present?
+                  .d2-push-bottom.sk-small-list
+                    = "Также СТО занимается: #{@cto.other_job_types}"
+            - if @cto.services.count > 0
+              .sk-middle-title.bold.d2-push-bottom
+                | Дополнительные услуги:
+              .d4-push-bottom.sk-cto-results-block.d2-push-top
+                ul.d2-push-top.d-grid-wrapper
+                  - @cto.services.uniq.each_with_index do |cb, index|
+                    li.d-grid.size1of3.push-bottom.sk-small-list
+                      = cb.name
+
+                    - if index % 3 == 2
+                      .clear
+              .clear
+            .none.hidden
+              a.st-unitLeft.sk-comment.sk-blue-decorated-link.js-send-report href="#"
+                | Пожаловаться
+            .clear
+
+        .st-cto-card-tab-container.ionTabs__item data-name="tabs-2"
+          .st-cto-tab-1
+
+            .sk-middle-title.bold.d2-push-ends
+              = @cto.name
+
+            .d4-push-bottom.sk-cto-results-block.d2-soft-ends.d2-push-top
+              = @cto.description
+
+            - unless @cto.start_from_year.blank?
+              .sk-middle-title.bold.d2-push-bottom
+                | Год основания:
+              .d4-push-bottom.sk-cto-results-block.d2-soft-ends.d2-push-top
+                = "#{@cto.start_from_year} г."
+
+            - if @cto.certificate_any?
+              .sk-middle-title.bold.d2-push-bottom
+                | Лицензии:
+              .d4-push-bottom.sk-cto-results-block.d2-soft-ends.d2-push-top
+                = @cto.plain_certificate
+
+            - unless @cto.boxsize.blank?
+              .sk-middle-title.bold.d2-push-bottom
+                | Количество мест в ремзоне:
+              .d4-push-bottom.sk-cto-results-block.d2-soft-ends.d2-push-top
+                = @cto.boxsize
+
+            - unless @cto.sign_on_time.nil?
+              .sk-middle-title.bold.d2-push-bottom
+                | Прием клиентов:
+              .d4-push-bottom.sk-cto-results-block.d2-soft-ends.d2-push-top
+                - if @cto.sign_on_time
+                  | Строго по записи
+                - else
+                  | Можно без записи
+
+            - if @cto.equipment_ctos.count > 0
+              .sk-middle-title.bold.d2-push-bottom
+                | Оборудование:
+              .d4-push-bottom.st-column-left-side.sk-cto-results-block.d2-soft-top
+                - @cto.equipment_ctos.each do |e|
+                  .d2-push-bottom.sk-small-list
+                    = "#{e.title} #{e.mark}"
+            - if @cto.guarantee_ctos.count > 0
+              .sk-middle-title.bold.d2-push-bottom
+                | Гарантии на работы
+
+              .d3-push-ends
+                table.size1of1.sk-price-table
+                  tr.sk-align-lt
+                    th.sk-blue-container Гарантия
+                    th.sk-blue-container Комменатрий
+                  - @cto.guarantee_ctos.each do |p|
+                    tr
+                      td
+                        = p.length
+                      td
+                        = p.comment
+          .none.hidden
+            a.st-unitLeft.sk-comment.sk-blue-decorated-link.js-send-report href="#"
+              | Пожаловаться
+          .clear
+
+        .st-cto-card-tab-container.ionTabs__item data-name="tabs-3"
+          .sk-cto-response-block.d-grid-wrapper
+            - if @cto.cto_pricelist.present?
+              .sk-middle-title.bold.d2-push-ends.bold
+                | Прайслист СТО
+
+              .d2-push-ends
+                = raw @cto.cto_pricelist
+
+            - if @cto.pricelists.count > 0
+              .sk-middle-title.bold.d2-push-ends.bold
+                | Наш Прайслист
+
+              .d3-push-ends
+                table.size1of1.sk-price-table
+                  tr.sk-align-lt
+                    th.sk-blue-container Дата
+                    th.sk-blue-container Виды работ
+                    th.sk-blue-container Цена
+                    th.sk-blue-container Комменатрий
+                  - @cto.pricelists.each do |p|
+                    tr
+                      td
+                        = p.checked_at_formated
+                      td
+                        = p.description
+                      td
+                        = p.price
+                      td
+                        = p.comment
+
+        .st-cto-card-tab-container.ionTabs__item data-name="tabs-4"
+          .d-grid-wrapper
+            button.o-big-button.sk-blue-button.st-unitRight.js-new-response data-cto="#{@cto.id}"
+              | Оставить отзыв
+            .sk-middle-title.bold.d2-push-ends
+              | Отзывы
+            - if CtoResponse.where(cto_id: @cto.id).count == 0
+              .d2-push-ends.light
+                | Никто пока не оставил отзыв. Будьте первыми!
+            - CtoResponse.where(cto_id: @cto.id).order('created_at DESC').each do |r|
+              - next unless r.user.present?
+              .sk-cto-response-block.sk-cto-results-block.d3-soft-top style="margin-bottom: 20px; border-bottom: none;"
+
+                a.sk-form-results.st-unitLeft.sk-middle-title.bold.light.bold.sk-blue-decorated-link href="/profiles/#{r.user.id}"
+                  - if r.user.present?
+                    = r.user.name
+                  - else
+                    = r.username
+                .st-unitRight
+                  = r.created_at.strftime("%d-%m-%Y %H:%M")
+                .clear
+                .light.bold
+                  = r.car_full_name
+                - if r.user.present?
+                  .js-rating-container.d2-push-ends
+                    .star data-dimension="quality" data-rating="#{r.rate_cto.to_i}" data-id="#{@cto.id}" data-classname="Cto" data-disable-after-rate="true" data-readonly="true" data-star-count="5"
+
+                .d2-push-ends.light
+                  = simple_format r.text
+
+                .clear
+                - if r.responce_fix_proces.count > 0
+                  table.size1of1.sk-price-table width="100%"
+                    tr.sk-align-lt
+                      th.sk-blue-container.sk-align-ct width="315px"
+                        | Работа
+                      th.sk-blue-container.sk-align-ct width="315px"
+                        | Стоимость
+                    - r.responce_fix_proces.each do |f|
+                      tr
+                        td.sk-align-ct width="315px"
+                          = f.detail
+                        td.sk-align-ct width="315px"
+                          = "#{f.price} р."
+                .clear.d2-push-top
+              .clear
+
+        .ionTabs__preloader
+  .d-grid.size3of10
+    .st-cto-card-container
+      #ymap.d2-push-left.push-top.js-cto-map style="width: 284px; height: 284px;" data-lat="#{@cto.lat}" data-lon="#{@cto.lon}" data-title="#{@cto.name}" data-addr="#{@cto.full_adress}"
+      .d2-push-bottom
+        a.sk-blue-decorated-link.js-big-map.st-unitRight href="javascript:void(0)"
+          | Развернуть большую карту
+      .clear
+
+    - if @cto.photos.count > 0
+      .js-gallery
+        .d5-push-ends.sk-align-rt
+          a href="#{@cto.main_photo.pic.url(:medium)}"
+            = image_tag @cto.main_photo.pic.url(:thumb), class: "st-cto-gallery-main-photo"
+        .d2-push-top.st-cto-gallery-container.st-unitRight
+          - @cto.photos.where(main: false).each do |p|
+            a href="#{p.pic.url(:medium)}"
+              = image_tag p.pic.url(:thumb), class: "st-cto-gallery-little-photo push-right"
+        .clear
+
+    - if @cto.masters.count > 0
+      .d5-push-ends.d5-push-top.d5-push-left
+        span.light.bold
+          | Мастера СТО:
+        - @cto.masters.each do |m|
+          .d2-push-top
+            a.sk-blue-decorated-link href="/profiles/#{m.id}"
+              = m.name
+      .clear
+  .clear
+
+coffee:
+  new App.Cto(el: '.js-cto-card')

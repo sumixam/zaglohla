@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cto_id: 1
+  from_date: 2014-08-03
+  to_date: 2014-08-03
+  description: MyString
+  anytime: false
+
+two:
+  cto_id: 1
+  from_date: 2014-08-03
+  to_date: 2014-08-03
+  description: MyString
+  anytime: false

@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Email:
+  = @admin_administrator.email
+p
+  strong Password:
+  = @admin_administrator.password
+p
+  strong Acl:
+  = @admin_administrator.acl
+
+= link_to 'Edit', edit_admin_administrator_path(@admin_administrator)
+'|
+= link_to 'Back', admin_administrators_path

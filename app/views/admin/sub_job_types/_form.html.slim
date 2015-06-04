@@ -1,0 +1,13 @@
+= form_for @sub_job_type, url: @sub_job_type.new_record? ? admin_sub_job_types_path : admin_sub_job_type_path(@sub_job_type), :html => { :class => "form-horizontal" } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .control-group
+    = f.label :job_type_id, :class => 'control-label'
+    .controls
+      = f.select :job_type_id, JobType.all.map{|j| [j.name, j.id]}
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_job_types_path, :class => 'btn'

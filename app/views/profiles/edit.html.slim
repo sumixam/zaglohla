@@ -1,0 +1,144 @@
+- if @user.errors.any?
+  .d2-push-left.d6-soft-top
+    - @user.errors.full_messages.each do |e|
+      .push-top.sk-error-title
+        = e
+= form_for @user, url: profile_path(@user.id) do |f|
+  .user-edit-card-module.d-grid-wrapper.d6-soft-top.js-user-edit data-id="#{@user.id}"
+    .d-grid.size2of10.d4-soft-right.d2-soft-left
+      .o-user-photo.d2-push-bottom
+        = image_tag @user.avatar.url(:medium)
+      .sk-user-info-container
+        .sk-user-title.st-unitLeft
+          = @user.user_level.try(:name)
+        a.sk-comment.sk-blue-decorated-link href="#"
+          = f.file_field :avatar
+        .sk-user-status-title.d3-push-top
+          | Новичок
+        .clear
+        .d2-push-top
+          = "Баллов: #{@user.rating.try(:round) || 0}"
+
+    .d-grid.size5of10.d10-soft-right
+      .d2-push-bottom.d-grid-wrapper
+        .sk-user-card-name.d3-push-bottom
+          | Основная информация
+        .sk-user-edit-container.d3-soft-top.d-grid-wrapper
+          .d3-push-bottom
+            .d-grid.size1of6.sk-edit-line-title
+              | Имя:
+            = f.text_field :name, class: "o-main-input size5of6 sk-main-input"
+            .clear
+          .d3-push-bottom
+            .d-grid.size1of6.sk-edit-line-title
+              | Телефон:
+            = f.text_field :phone, class: "o-main-input size5of6 sk-main-input"
+            .clear
+          .d3-push-bottom
+            .d-grid.size1of6.sk-edit-line-title
+              | Город:
+            = f.select :city_id, City.all.map{|c| [c.name, c.id] }, { include_blank: "Выберите город" }, class: "o-main-select sk-main-select js-select2 size5of6"
+            .clear
+          .d3-push-bottom
+            .d-grid.size1of6.sk-edit-line-title
+              | О себе:
+
+            = f.text_area :description, class: "o-main-textarea size5of6 sk-main-input"
+            .clear
+          .d5-push-bottom
+            .sk-edit-line-title.d-grid.size1of6.sk-align-rt.d3-soft-right
+              | Я —
+            = f.select :type, [["Автовладелец", "CarOwner"], ["Автомеханик", "Mechanic"]], {}, class: "o-main-select sk-main-select js-select2 size3of10 js-user-type"
+            .clear
+            / - if @user.type == "Mechanic"
+          .d3-push-bottom.js-mechanic.hidden
+            .d-grid.size1of6.sk-edit-line-title
+              | Начало карьеры:
+            = f.select :start_career_year, (1950..DateTime.now.year), { include_blank: "Выберите год" }, class: "o-main-select sk-main-select js-select2 size5of6"
+            .clear
+              .d5-push-bottom
+                .sk-edit-line-title.d-grid.size1of6.sk-align-rt.d3-soft-right
+                  | Работа —
+                = f.select(:cto_id, options_for_select(Cto.where(show_on_site: true).order('name').map{ |c| [c.name, c.id, { "data-name" => "#{c.name}", "data-address" => "#{c.full_adress}", "selected" => c.id == @user.cto_id ? "selected": nil}]}), {include_blank: true}, class: "o-main-select sk-main-select js-select2-cto", style: "width: 83%")
+            / - if @user.type == "CtoOwner"
+            /   .d5-push-bottom
+            /     .sk-edit-line-title.d-grid.size1of6.sk-align-rt.d3-soft-right
+            /       | Я владею —
+            /     = f.select(:owner_cto_id, options_for_select(Cto.where(show_on_site: true).order('name').map{ |c| [c.name, c.id, { "data-name" => "#{c.name}", "data-img" => "#{c.main_photo.pic.url(:list)}", "data-address" => "#{c.full_adress}", "selected" => c.id == @user.owner_cto_id ? "selected": nil}]}), {}, class: "o-main-select sk-main-select js-select2-cto size3of10")
+
+          = f.submit "Сохранить", class: "st-unitRight o-entry-button sk-blue-button"
+          .clear
+      .clear
+
+    .d-grid.size3of10.d-grid-wrapper
+      .clear
+      - unless @user.social_account?
+        .sk-user-card-name.d3-push-bottom
+          | Адрес электронной почты
+        .sk-user-edit-container.d3-soft-top
+          .d-grid.size1of5.sk-edit-line-title
+            | Email
+          = f.text_field :email, class: "o-main-input size4of5 sk-main-input", value: @user.current_email
+        .d4-push-top
+          = f.submit "Изменить адрес", class: "st-unitRight o-entry-button sk-blue-button"
+          .clear
+        / .sk-user-card-name.d3-push-bottom.d6-push-top
+        /   | Оповещать меня на e-mail
+        / .sk-user-edit-container.d3-soft-top
+        /   .d3-push-bottom
+        /     .o-checkbox-wrapper
+        /       = f.check_box :notify_news, class: "o-checkbox-input sk-checkbox-input"
+        /       .o-checkbox-ic.sk-checkbox-ic.st-unitLeft.st-bl
+        /       label.sk-checkbox-label.push-left.st-unitLeft
+        /         | Новостная рассылка
+        /       .clear
+        /   .d3-push-bottom
+        /     .o-checkbox-wrapper
+        /       = f.check_box :notify_answers, class: "o-checkbox-input sk-checkbox-input"
+        /       .o-checkbox-ic.sk-checkbox-ic.st-unitLeft.st-bl
+        /       label.sk-checkbox-label.push-left.st-unitLeft
+        /         | Ответы на мои вопросы
+        /       .clear
+        /   .d3-push-bottom
+        /     .o-checkbox-wrapper
+        /       = f.check_box :notify_questions, class: "o-checkbox-input sk-checkbox-input"
+        /       .o-checkbox-ic.sk-checkbox-ic.st-unitLeft.st-bl
+        /       label.sk-checkbox-label.push-left.st-unitLeft
+        /         | Вопросы по моей специализации
+        /       .clear
+
+        /   .d3-push-bottom
+        /     .o-checkbox-wrapper
+        /       = f.check_box :notify_responses, class: "o-checkbox-input sk-checkbox-input"
+        /       .o-checkbox-ic.sk-checkbox-ic.st-unitLeft.st-bl
+        /       label.sk-checkbox-label.push-left.st-unitLeft
+        /         | Новые отзывы о моей СТО
+        /       .clear
+        /   .d4-push-bottom
+        /     = f.submit "Изменить", class: "st-unitRight o-entry-button sk-blue-button"
+        /     .clear
+        .sk-user-card-name.d3-push-bottom.d6-push-top
+          | Изменить пароль
+        .sk-user-edit-container.d3-soft-top
+          .d3-push-bottom
+            .d-grid.size1of3.sk-edit-line-title
+              | Текущий Пароль
+            = f.password_field :current_password, class: "o-main-input size2of3 sk-main-input"
+            .clear
+          .d3-push-bottom
+            .d-grid.size1of3.sk-edit-line-title
+              | Пароль
+            = f.password_field :password, class: "o-main-input size2of3 sk-main-input"
+            .clear
+          .d3-push-bottom
+            .d-grid.size1of3.sk-edit-line-title
+              | Подтверждение
+            = f.password_field :password_confirmation, class: "o-main-input size2of3 sk-main-input"
+            .clear
+          .d4-push-top
+            = f.submit "Изменить пароль", class: "st-unitRight o-entry-button sk-blue-button"
+            .clear
+
+    .clear
+coffee:
+  new App.UserEdit(el: '.js-user-edit')

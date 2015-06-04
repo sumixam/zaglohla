@@ -1,0 +1,57 @@
+= form_for @car, url: @car.new_record? ? admin_cars_path : admin_car_path(@car), :html => { :class => "form-horizontal js-car-form" } do |f|
+  .control-group
+    = f.label :nick, :class => 'control-label'
+    .controls
+      = f.text_field :nick, :class => 'text_field'
+  .control-group
+    = f.label :year_start, :class => 'control-label'
+    .controls
+      = f.text_field :year_start, :class => 'text_field'
+  .control-group
+    = f.label :runner_km, :class => 'control-label'
+    .controls
+      = f.text_field :runner_km, :class => 'text_field'
+  .control-group
+    = f.label :description, :class => 'control-label'
+    .controls
+      = f.text_area :description
+  .control-group.js-user-id
+    = f.label :user_id, :class => 'control-label'
+    .controls
+      = f.select :user_id, User.order(:name).map{ |p| [p.name, p.id] }, :class => 'text_field'
+  .control-group
+    = f.label :car_brand_id, :class => 'control-label'
+    .controls
+      = f.select :car_brand_id, CategoryAuto.find(1).car_brands.order(:name).map{ |p| [p.name, p.id] }, {include_blank: true}, :class => 'text_field js-car-brand'
+  .control-group
+    = f.label :car_model_id, :class => 'control-label'
+    .controls
+      - if @car.car_brand_id.present?
+        = f.select :car_model_id, CarModel.where(car_brand_id: @car.car_brand_id).order(:name).map{ |p| [p.name, p.id] }, {include_blank: true}, :class => 'text_field js-car-model'
+      - else
+        = f.select :car_model_id, [], {}, :class => 'text_field js-car-model'
+  .control-group
+    = f.label :car_generation_id, :class => 'control-label'
+    .controls
+      - if @car.car_model_id.present?
+        = f.select :car_generation_id, CarGeneration.where(car_model_id: @car.car_model_id).order(:name).map{ |p| [p.name, p.id] }, {include_blank: true}, :class => 'text_field js-car-generation'
+      - else
+        = f.select :car_generation_id, [], {}, :class => 'text_field js-car-generation'
+  .control-group
+    = f.label :car_engine_id, :class => 'control-label'
+    .controls
+      - if @car.car_generation_id.present?
+        = f.select :car_engine_id, CarEngine.where(car_generation_id: @car.car_generation_id).order(:name).map{ |p| [p.name, p.id] }, {include_blank: true}, :class => 'text_field js-car-engine'
+      - else
+        = f.select :car_engine_id, [], {}, :class => 'text_field js-car-engine'
+  .control-group
+    = f.label :alternative_name, :class => 'control-label'
+    .controls
+      = f.text_field :alternative_name, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_pages_path, :class => 'btn'
+
+
+coffee:
+  new App.AdminCar(el: '.js-car-form')

@@ -1,0 +1,40 @@
+.wiki-module.d5-soft-top.d-grid-wrapper.js-spares
+  .d-grid.size7of20
+    h2.sk-wiki-article-list.d2-soft-bottom.d4-push-bottom
+      | Навигация
+    .push-left
+      ul#tree
+        = render partial: "menu_rows", locals: {page: @page, parent_id: Page.where(parent_id: 0, visible: true).first.id, level: 1}
+  .d-grid.size13of20
+    .st-unitRight
+      = form_for Page.new, url: "/wikis/search" do |f|
+        = text_field_tag :term, nil, class: "o-main-input size3of5 sk-main-input"
+        = f.submit 'Искать', class: "o-edit-button sk-blue-button d2-push-left"
+    - crumps = [@page]
+    - while crumps.last.parent_id != 0; crumps << crumps.last.parent; end;
+    h2.sk-wiki-article-title.d2-soft-bottom.d4-push-bottom
+      = @page.title
+    - if @page.parent_id != 0
+      .sk-ligth
+        - crumps.reverse.each do |c|
+          = link_to c.title, wiki_path(c.id), class: "sk-blue-decorated-link"
+          - if c.id != @page.id
+            = " > "
+    .sk-landing-description-text.js-wiki-body
+      = raw @page.body
+    - if @page.parent_id != 0
+      .d4-soft-ends.sk-landing-description.d10-push-top
+        .sk-landing-description-text
+          | Составление автомобильной энциклопедии - долгий процесс, и на сегодняшний день эта работа на zaglohla.ru еще не закончена. Мы постоянно работаем над новыми статьями и иллюстрациями. Если вы заметили ошибку или неточность - выделите кусок текста и нажмите Cntrl+Alt - робот автоматически отправит нам сообщение, и мы всё исправим. Также, мы готовы коммерчески сотрудничать с авторами, которые готовы писать понятные широкому кругу статьи об устройстве автомобиля.
+        .sk-landing-description-text.d3-push-top
+          = raw "По любым вопросам по энциклопедии пишите нам на <a href='mailto:wiki@zaglohla.ru'>wiki@zaglohla.ru</a>."
+
+coffee:
+  do $('#tree').abixTreeList
+  $(document).ready ->
+    $('.js-wiki-body img').each (i, el) ->
+      txt = $(el).attr("alt")
+      href = $(el).attr("src")
+      width = ($(el).width() || 100)
+      $(el).wrap("<div class='img-wrap' style='width: #{width}px'><div class='img-container'><a href='#{href}' class='js-wiki-img'></a></div><div class='img-cap'>#{txt}</div></div>")
+    $('.js-wiki-img').magnificPopup({type:'image'})

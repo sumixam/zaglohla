@@ -1,0 +1,65 @@
+.sk-modal-window.o-modal-window.st-center-relative.response-module
+  .questions-module.js-cto-responce-form.d-grid-wrapper
+    h1.d3-soft-bottom.sk-main-page-title
+      | Отзыв
+
+    = form_for CtoResponse.new do |f|
+      = f.hidden_field :user_id, value: current_user.try(:id)
+      = f.hidden_field :cto_id, value: @cto.id
+      - unless current_user
+        .d4-push-top
+          label.sk-middle-title.d3-soft-ends.push-bottom
+            | Имя
+          input class="o-main-input size1of1 sk-main-input d2-push-top" id="cto_response_username" name="user[name]" type="text"
+        .d4-push-top
+          label.sk-middle-title.d3-soft-ends.push-bottom
+            | Email
+          input class="o-main-input size1of1 sk-main-input d2-push-top js-email-validate" id="cto_response_username" name="user[email]" type="text"
+      .d4-push-top
+        select.o-main-select.sk-main-select.d-grid.size2of11.d3-push-right.js-select2.js-car-brand.js-skip-validation.js-car-select name="cto_response[car_brand_id]"
+          option
+            | Марка
+          - CarBrand.main_brands.order(:name).each do |cb|
+            option value="#{cb.id}"
+              = cb.name
+
+        select.o-main-select.sk-main-select.d-grid.size2of11.d3-push-right.js-select2.js-car-model.js-skip-validation.js-car-select name="cto_response[car_model_id]"
+          option Модель
+
+        select.o-main-select.sk-main-select.d-grid.size3of11.js-select2.d2-push-right.js-car-generation.js-skip-validation.js-car-select name="cto_response[car_generation_id]"
+          option Поколение
+
+        select.o-main-select.sk-main-select.d-grid.size3of11.js-select2.js-car-engine.js-skip-validation name="cto_response[car_engine_id]"
+          option Двигатель
+        .clear
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Или введите марку/модель автомобиля самостоятельно
+        input class="o-main-input size1of1 sk-main-input d2-push-top js-skip-validation js-custom-car" name="cto_response[custom_car]"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Когда делали машину?
+        input class="o-main-input size1of1 sk-main-input d2-push-top js-was-at js-date-input" name="cto_response[was_at]"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Что чинили?
+        .js-resp-row
+          input class="o-main-input size2of5 sk-main-input d2-push-top" name="cto_response[responce_fix_proces_attributes][][detail]" placeholder="Введите виды работ"
+          input class="o-main-input size2of5 sk-main-input d2-push-top d2-push-left" name="cto_response[responce_fix_proces_attributes][][price]" placeholder="Цена"
+          .clear
+        .clear
+        button.js-add-row-resp.o-entry-button.sk-blue-button.d2-push-top
+          | + добавить еще вид работ
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom.js-star-cto
+          | Оцените сервис
+        br
+        .star data-classname="Cto" data-dimension="quality" data-disable-after-rate="true" data-id="#{@cto.id}" data-rating="0" data-readonly="false" data-star-count="5" title="not rated yet" style="cursor: default; width: 100px;"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Текст отзыва
+        br
+        = f.text_area :text, class:"o-main-textarea size1of1 sk-main-input d2-push-top"
+        button.st-unitRight.o-entry-button.sk-blue-button.push-none.js-submit-request
+          | Отправить
+        .clear

@@ -1,0 +1,5 @@
+- for i in @districts
+  .push-sides
+    input type="checkbox" name="cto[cto_districts_attributes][][district_id]" value="#{i.id}"
+    span.check-special
+      = i.name

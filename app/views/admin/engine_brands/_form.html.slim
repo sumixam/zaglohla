@@ -1,0 +1,16 @@
+= form_for @car_engine, url: @car_engine.new_record? ? admin_engine_brands_path : admin_engine_brand_path(@car_engine), :html => { :class => "form-horizontal" } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .control-group
+    = f.label :car_generation_id, :class => 'control-label'
+    .controls
+      = f.select :car_generation_id, CarGeneration.joins(car_model: {car_brand: :category_autos}).order('category_autos.name, car_brands.name, car_models.name, car_generations.name').map{|j| ["#{j.name} (#{j.car_model.car_brand.category_autos.first.try(:name)} - #{j.car_model.car_brand.name} - #{j.car_model.name})", j.id]}, {}, class: 'js-select2'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_brands_path, :class => 'btn'
+coffee:
+  $(document).ready ->
+    $('.js-select2').select2()

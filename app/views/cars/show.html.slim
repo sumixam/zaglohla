@@ -1,0 +1,71 @@
+.questions-module.d5-soft-top.d-grid-wrapper.js-cars-show
+  .d-grid.size7of10.js-car-top data-id="#{@car.id}"
+    - if current_user && current_user.id == @car.user.id
+      .d2-push-right
+        .st-unitLeft
+          span.d2-soft-right
+            | Выберите автомобиль:
+          span
+            select.js-car-select-box.js-select2
+              - @car.user.cars.each do |c|
+                - if c.id == @car.id
+                  option value="#{c.id}" selected="selected"
+                    = c.nicked_name
+                - else
+                  option value="#{c.id}"
+                    = c.nicked_name
+        .st-unitRight
+          a.sk-blue-decorated-link.js-add-car href="#"
+            | + добавить новый
+          br
+          a.sk-blue-decorated-link.js-edit-car href="#"
+            | редактировать
+          br
+          a.sk-blue-decorated-link.js-remove-car href="#"
+            | удалить
+      .clear
+    .d2-push-right
+      .st-unitLeft style="width: 470px"
+        h2.sk-big-title.d3-push-ends.light.sk-car-title.d3-soft-bottom.d2-push-bottom
+          = @car.nicked_name
+
+        .sk-regular-comment.light.d2-push-bottom
+          = "Владелец: "
+          a.sk-blue-decorated-link href="/profiles/#{@car.id}"
+            = "#{@car.user.name}"
+          - if @car.user.city.present?
+            = ", #{@car.user.city.name}"
+        - if @car.year_start
+          .sk-comment.light.d3-push-bottom
+            = "Ездит с #{@car.year_start} года"
+        - unless @car.description.blank?
+          .light.sk-regular-comment
+            strong
+              | Об автомобиле:
+          .light.sk-regular-comment
+            = simple_format @car.description
+      .js-gallery style="width: 200px; float: right;"
+        .d5-push-ends.sk-align-rt
+          a href="#{@car.main_photo.pic.url(:medium)}"
+            = image_tag @car.main_photo.pic.url(:thumb), class: "car-gallery-main-photo"
+        .d2-push-top.st-cto-gallery-container.st-unitRight
+          - (@car.photos - [@car.main_photo]).each do |p|
+            a href="#{p.pic.url(:medium)}"
+              = image_tag p.pic.url(:thumb), class: "car-gallery-little-photo push-right"
+        .clear
+  .d-grid.size3of10
+    .light.sk-car-title.d3-soft-bottom
+      | Последние добавленные автомобили:
+    .d2-push-top
+      - Car.order('created_at DESC').limit(8).each do |c|
+        .d2-push-top style="min-height: 60px"
+          a.sk-blue-decorated-link href="/cars/#{c.id}"
+            = image_tag c.main_photo.pic.url(:thumb), class: "car-gallery-little-photo st-unitLeft d2-push-right"
+            .d2-soft-top
+              = c.full_name
+        .clear
+    .d4-push-top
+      a.sk-blue-decorated-link href="/cars"
+        | Посмотреть все &rarr;
+coffee:
+  new App.CarsShowController(el: '.js-cars-show')

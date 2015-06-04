@@ -1,0 +1,27 @@
+= form_for @car_brand, url: @car_brand.new_record? ? admin_car_brands_path : admin_car_brand_path(@car_brand), :html => { :class => "form-horizontal" } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .control-group
+    = f.label :local_brand, :class => 'control-label'
+    .controls
+      = f.check_box :local_brand, :class => 'text_field'
+  .control-group
+    = f.label :fav, :class => 'control-label'
+    .controls
+      = f.check_box :fav, :class => 'text_field'
+  .control-group
+    label.control-label
+      = "Типы ТС"
+    .controls
+      - CategoryAuto.all.each do |d|
+        label.push-sides.st-unitLeft.st-column-check.st-bl
+          = check_box_tag "car_brand[car_brand_category_autos_attributes][][category_auto_id]", d.id, @car_brand.category_autos.include?(d)
+          span.check-special
+            = d.name
+        .clear
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_car_brands_path, :class => 'btn'

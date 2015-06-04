@@ -1,0 +1,106 @@
+@import "oocss/global/icons/patterns"
+@import "oocss/global/colors"
+
+.sk-close-icon
+  @extend %close-icon
+  cursor: pointer
+
+  &:hover
+    @extend %close-blue-icon
+    cursor: pointer
+
+.sk-question-icon
+  cursor: pointer
+  border-radius: 15px
+  padding: 0px 6px 1px 5px
+  background: $blue
+  font-size: 8px
+  color: $white
+  line-height: 17px
+
+.sk-social-fb
+  @extend %fb-icon
+  cursor: pointer
+
+.sk-social-vk
+  @extend %vk-icon
+  cursor: pointer
+
+.sk-social-you
+  @extend %you-icon
+  cursor: pointer
+
+.sk-social-tw
+  @extend %tw-icon
+  cursor: pointer
+
+.sk-question-icon:hover
+  background: $blue-hover
+
+.sk-pseudo-bottom-arrow
+  &::after
+    border-top: 5px solid $blue
+    border-left: 4px solid transparent
+    border-right: 4px solid transparent
+
+.sk-pseudo-bottom-arrow:hover
+  &::after
+    border-top: 5px solid $blue-hover
+
+.sk-pseudo-top-arrow
+  &::after
+    border-bottom: 5px solid $blue
+    border-left: 4px solid transparent
+    border-right: 4px solid transparent
+
+.sk-pseudo-top-arrow:hover
+  &::after
+    border-bottom: 5px solid $blue-hover
+
+.sk-logout-icon
+  background: asset-url('menu-icon/logout-ic.png')
+  background-size: 16px 16px
+
+  &:hover
+    background: asset-url('menu-icon/logout-ic-hover.png')
+    background-size: 16px 16px
+
+.o-special-price-icon
+  background-image: asset-url('special.png')
+
+.sk-idea-icon
+  background-image: asset-url('idea-icon.png')
+
+.sk-my-car-default
+  background: asset-url('menu-icon/my-car-ic.png')
+  background-size: 21px 21px
+
+  &.sk-my-car-renault
+    background-image: asset-url('auto/renault.png')
+
+  &.sk-my-car-volkswagen
+    background-image: asset-url('auto/volkswagen.png')
+
+  &.sk-my-car-opel
+    background-image: asset-url('auto/opel.png')
+
+  &.sk-my-car-bmw
+    background-image: asset-url('auto/bmw.png')
+
+  &.sk-my-car-mercedez-benz
+    background-image: asset-url('auto/mercedes.png')
+
+  &.sk-my-car-nissan
+    background-image: asset-url('auto/nissan.png')
+
+  &.sk-my-car-mitsubishi
+    background-image: asset-url('auto/mitsubishi.png')
+
+  &.sk-my-car-honda
+    background-image: asset-url('auto/honda.png')
+
+  &.sk-my-car-citroen
+    background-image: asset-url('auto/citroen.png')
+
+  &.sk-my-car-mazda
+    background-image: asset-url('auto/mazda.png')

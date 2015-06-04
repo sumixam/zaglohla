@@ -1,0 +1,91 @@
+.sk-modal-window.o-modal-window.st-center-relative.invoice-module.js-cto-invoice-form
+  h2.sk-modal-title-big.push-none
+    | Онлайн-заявка
+  = form_for @invoice do |f|
+    = f.hidden_field :cto_id, value: @cto.id
+    .sk-modal-body.d3-push-top
+      .sk-middle-title.d3-soft-ends.push-bottom.d2-push-top
+        | Контактная информация
+
+      .d2-push-bottom.d-grid-wrapper
+        .d-grid.size1of6.d3-push-right.sk-modal-field-title
+          | Имя:
+
+        .d-grid.size3of6
+          input.o-main-input.size1of1.sk-main-input name="invoice[name]"
+
+        .clear
+
+      .d2-push-bottom.d-grid-wrapper
+        .d-grid.size1of6.d3-push-right.sk-modal-field-title
+          | Email:
+
+        .d-grid.size3of6
+          input.o-main-input.size1of1.sk-main-input name="invoice[email]"
+
+        .clear
+
+      .d2-push-bottom.d-grid-wrapper
+        .d-grid.size1of6.d3-push-right.sk-modal-field-title
+          | Телефон:
+
+        .d-grid.size3of6
+          input.o-main-input.size1of1.sk-main-input name="invoice[phone]"
+
+        .clear
+
+      .sk-middle-title.d3-soft-ends.push-bottom.d2-push-top
+        | Информация об автомобиле
+
+      .d2-push-bottom.d-grid-wrapper
+        select.o-main-select.sk-main-select.js-select2.size1of5.d2-push-right.js-car-brand.js-skip-validation.js-car-select name="invoice[car_brand_id]"
+          option
+            | Марка
+          - CategoryAuto.find(1).car_brands.order(:name).each do |cb|
+            option value="#{cb.id}"
+              = cb.name
+        select.o-main-select.sk-main-select.js-select2.size1of5.d2-push-right.js-car-model.js-skip-validation.js-car-select name="invoice[car_model_id]"
+          option
+            | Модель
+        select.o-main-select.sk-main-select.js-select2.size1of5.d2-push-right.js-car-generation.js-skip-validation.js-car-select name="invoice[car_generation_id]"
+          option
+            | Поколение
+        select.o-main-select.sk-main-select.js-select2.size1of5.d2-push-right.js-car-engine.js-skip-validation name="invoice[car_engine_id]"
+          option
+            | Двигатель
+
+      .d2-push-bottom.d-grid-wrapper
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Или введите марку/модель автомобиля самостоятельно
+        input class="o-main-input size1of1 sk-main-input d2-push-top js-skip-validation js-custom-car" name="invoice[custom_car]"
+
+      .d2-push-bottom.d-grid-wrapper
+        input.o-main-input.size1of1.sk-main-input.size1of1 placeholder="Пробег" name="invoice[run_km]"
+
+      .sk-middle-title.d3-soft-ends.push-bottom.d2-push-top
+        | Опишите поломку
+
+      .d2-push-bottom
+        textarea.o-main-textarea.sk-main-input.size1of1  name="invoice[text]"
+
+      / a.st-unitLeft.sk-blue-decorated-link.hidden href=""
+      /   | Прикрепить фотографию
+
+      .clear
+
+      .sk-middle-title.d3-soft-ends.push-bottom.d2-push-top
+        | Желательное время приема
+
+      .d4-push-bottom.d-grid-wrapper
+        .d-grid.size1of3.d2-push-right
+          input.o-main-input.size1of1.sk-main-input.js-date-input placeholder="Дата" name="invoice[view_date]"
+
+        .d-grid.size1of3
+          input.o-main-input.size1of1.sk-main-input.js-time-input placeholder="Время" name="invoice[view_time]"
+
+        .clear
+
+      button.st-unitRight.o-entry-button.sk-blue-button.js-submit-request
+        | Отправить заявку
+
+      .clear

@@ -1,0 +1,52 @@
+.sk-modal-window.o-modal-window.st-center-relative.response-module
+  .questions-module.js-question-form.d-grid-wrapper
+    h1.d3-soft-bottom.sk-main-page-title
+      | Онлайн заявка
+
+    = form_for RepairRequest.new do |f|
+      = f.hidden_field :user_id, value: current_user.try(:id)
+      .d4-push-top
+        select.o-main-select.sk-main-select.d-grid.size2of9.d3-push-right.js-select2.js-car-brand.js-skip-validation.js-car-select name="repair_request[car_brand_id]"
+          option Марка
+          - CategoryAuto.find(1).car_brands.order(:name).each do |cb|
+            option value="#{cb.id}"
+              = cb.name
+        select.o-main-select.sk-main-select.d-grid.size2of9.d3-push-right.js-select2.js-car-model.js-skip-validation.js-car-select name="repair_request[car_model_id]"
+          option Модель
+
+        select.o-main-select.sk-main-select.d-grid.size2of9.d4-push-right.js-select2.js-car-generation.js-skip-validation.js-car-select name="repair_request[car_generation_id]"
+          option Поколение
+
+        select.o-main-select.sk-main-select.d-grid.size2of9.js-select2.js-car-engine.js-skip-validation name="repair_request[car_engine_id]"
+          option Двигатель
+        .clear
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Или введите марку/модель автомобиля самостоятельно
+        input class="o-main-input size1of1 sk-main-input d2-push-top js-skip-validation js-custom-car" name="repair_request[custom_car]"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Что сломалось?
+        = f.text_field :title, class:"o-main-input size1of1 sk-main-input d2-push-top"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Email
+        = f.text_field :email, class:"o-main-input size1of1 sk-main-input d2-push-top"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Телефон
+        = f.text_field :phone, class:"o-main-input size1of1 sk-main-input d2-push-top"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Ваше имя
+        = f.text_field :name, class:"o-main-input size1of1 sk-main-input d2-push-top"
+      .d4-push-top
+        label.sk-middle-title.d3-soft-ends.push-bottom
+          | Описание
+        br
+        = f.text_area :body, class:"o-main-textarea size1of1 sk-main-input d2-push-top"
+
+      .d4-push-top
+        button.st-unitRight.o-entry-button.sk-blue-button.js-submit-request
+          | Отправить заявку
+      .clear

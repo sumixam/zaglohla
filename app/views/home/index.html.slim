@@ -1,0 +1,111 @@
+.landing-module.js-landing-slider
+  .st-landing-slide.sk-landing-slide.relative
+    .st-slide-form.sk-landing-slide-list.d4-soft
+
+      .flexslider
+        ul.slides
+
+          li
+            .sk-slide-title.d2-push-bottom
+              span.sk-orange-list-text
+                | Zaglohla.ru
+              |  экономит время и деньги!
+
+            .d3-push-bottom
+              | Расскажите нам о своей проблеме - мы поможем вам разобраться в
+              |  поломке, найти СТО и запчасти в кратчайший срок.
+              br
+              br
+              | Звоните:
+            .sk-slide-title.sk-align-cy
+              | 997-78-78
+            .d3-push-top
+              | Горячая линия работает без выходных, с 10 до 20 часов.
+          li
+            .sk-slide-title.d2-push-bottom
+              span.sk-orange-list-text
+                | Zaglohla.ru
+              |  экономит время и деньги!
+
+            ul.sk-slider-list.soft-left
+              li.sk-slider-list-point.st-slider-list-point.soft-ends Быстрый поиск СТО
+              li.sk-slider-list-point.st-slider-list-point.soft-ends Онлайн-оценка стоимости ремонта
+              li.sk-slider-list-point.st-slider-list-point.soft-ends Подбор запчастей
+              li.sk-slider-list-point.st-slider-list-point.soft-ends Консультация с экспертами по автосервису
+              li.sk-slider-list-point.st-slider-list-point.soft-ends Доступная энциклопедия устройства автомобиля
+              li.sk-slider-list-point.st-slider-list-point.soft-ends Хранение истории обслуживания автомобиля
+
+  .d-grid-wrapper.js-landing-cto-search
+
+    .search-cto-form-module.d4-soft-top.d2-soft-bottom.d3-soft-sides.sk-search-form.sk-search-form-top.d-grid-wrapper.d4-push-bottom
+
+      .d3-soft-top
+
+        .d-grid.size1of8.sk-search-landing-title Найти СТО
+
+        .d-grid.size3of8.d-grid-wrapper
+          select.o-main-select.sk-main-select.d-grid.size7of8.js-select2.js-cto-car-brand
+            option value=""
+              | Марка
+            - CategoryAuto.find(1).car_brands.order(:name).each do |cb|
+              option value="#{cb.slug}"
+                = cb.name
+          .clear
+
+        .d-grid.size3of8.d-grid-wrapper
+          select.o-main-select.sk-main-select.d-grid.size7of8.js-select2.js-cto-location placeholder="Где искать?"
+            option value=""
+              | Где искать?
+            - MetroStation.all.each do |m|
+              option value="m_#{m.slug}"
+                = "#{m.name} метро"
+            - District.all.each do |d|
+              option value="d_#{d.slug}"
+                = "#{d.name} район"
+          .clear
+          .d2-push-ends
+            a.sk-blue-decorated-link.push-sides.sk-small-comment href="#" Выбрать из списка
+        .d-grid.size1of8
+          button.o-big-button.sk-orange-button.push-none.js-search-cto Найти СТО
+          .clear
+    .clear
+    .d-grid.size1of1.d2-push-top
+      .d4-push-bottom.d3-soft.d6-soft-bottom.sk-landing-description
+        .d-grid.size3of10.st-unitRight.d4-push-left.d4-push-bottom
+          .widget-module.sk-widget-module.st-unitRight
+            = render "layouts/partials/widget/repair_request"
+        .d6-soft-bottom
+          .sk-landing-description-title
+            | Кто мы такие?
+          .sk-landing-description-text.d4-push-top
+            span.bold
+              | Заглохла.ру
+            |  &mdash; новый веб-сервис по обслуживанию автомобилей.
+            br
+            br
+            | Мы собрали самую полную базу из более чем 1000 СТО Петербурга и Ленинградской области,
+            |  в которой вы можете быстро найти подходящую для Вас и Вашего автомобиля станцию техобслуживания.
+            br
+            br
+            | Для ремонта нужны запчасти. Не ищите их по всему городу - мы собрали
+            |  для вас прайс-листы нескольких сотен магазинов. Оригинал и неоригинал, в наличии и под заказ.
+            br
+            br
+            | Наш онлайн-оценщик стоимости ремонта позволит заранее понять, сколько
+            |  нужно платить за те или иные работы, а в разделе "Вопросы по ремонту" мастера
+            |  и эксперты-автомобилисты помогут разобраться в поломке вашей машины.
+            br
+            br
+            | Чтобы для Вас не оставалось непонятных слов и понятий в описании проблемы с
+            |  автомобилем, создана "АвтоВики", где доступным языком описана конструкция и
+            |  принцип работы отдельных деталей и всех систем современной машины в целом.
+            br
+            br
+            | Чтобы вовремя успевать менять расходники и знать, во сколько Вам обходится
+            |  сервис автомобиля, фиксируйте все работы в бортовом журнале в разделе "Мой автомобиль".
+
+    .clear
+
+coffee:
+  new App.HomeController(el: '.js-landing-slider')
+  new App.LandingSearch(el: '.js-landing-cto-search')

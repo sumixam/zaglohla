@@ -1,0 +1,13 @@
+form accept-charset="UTF-8" action="/reports" class="js-report-form" data-remote="true" method="post"
+  input type="hidden" name="report[user_id]" value="#{@user_id}"
+  h2.d3-soft-bottom.sk-main-page-title.push-none
+    | Пожаловаться
+  .sk-regular-comment.light.d3-push-ends
+    | Напишите нам
+
+  textarea.o-main-textarea.sk-main-input.size1of1.d3-push-bottom name="report[description]"
+
+  button.st-unitRight.o-entry-button.sk-blue-button
+    | Отправить жалобу
+
+  .clear

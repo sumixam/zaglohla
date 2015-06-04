@@ -1,0 +1,6 @@
+- Page.where(parent_id: parent_id, visible: true).each do |p|
+  li.d2-push-ends class="#{page.parent_id_list.include?(p.id) ? "js-expanded" : ""} d#{(level - 1)*2}-push-left"
+    = link_to p.title, wiki_path(p), class:"sk-blue-link sk-wiki-article-list-title"
+    - if p.childs.where(visible: true).count > 0
+      ul
+        = render partial: "menu_rows", locals: {page: page, parent_id: p.id, level: level+1}

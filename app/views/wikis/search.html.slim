@@ -1,0 +1,31 @@
+.wiki-module.d5-soft-top.d-grid-wrapper.js-spares
+  .d-grid.size3of10
+    h2.sk-wiki-article-list.d2-soft-bottom.d4-push-bottom
+      | Навигация
+    .d4-push-left.light
+      ul
+        - Page.where(parent_id: 0).first.childs.each do |p|
+          li.d2-push-ends
+            = link_to p.title, wiki_path(p), class:"sk-blue-link sk-wiki-article-list-title"
+          - p.childs.each do |pp|
+            li.d2-push-left.d2-push-ends
+              = link_to pp.title, wiki_path(pp), class:"sk-blue-link"
+            - pp.childs.each do |ppp|
+              li.d4-push-left.d2-push-ends
+                = link_to ppp.title, wiki_path(ppp), class:"sk-blue-link"
+  .d-grid.size7of10
+    .st-unitRight
+      = form_for Page.new, url: "/wikis/search" do |f|
+        = text_field_tag :term, @term, class: 'o-main-input size3of5 sk-main-input'
+        = f.submit 'Искать', class: "o-edit-button sk-blue-button d2-push-left"
+    h2.sk-wiki-article-title.d2-soft-bottom.d4-push-bottom
+      = "Вы искали: #{@term}"
+
+    .d2-push-ends
+      = "Найдено: #{@pages.count}"
+    ul
+      - @pages.each do |p|
+        li.sk-blue-title.d2-soft-ends
+          = link_to p.title, wiki_path(p.id), class: "sk-blue-decorated-link sk-middle-title"
+          p.light
+            = highlight raw(strip_tags(p.body).truncate(250)), @term

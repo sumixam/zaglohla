@@ -1,0 +1,75 @@
+- if @result.length > 0
+  .sk-search-form-title Результаты поиска
+  .d2-soft-bottom
+    = "Найдено: #{@count} Вопросов. Показаны #{(@page - 1) * 20 + 1}-#{@page*20} вопросов"
+  - for q in @result
+    .d-grid-wrapper.sk-questions-top-container.d3-soft-ends
+      .d-grid.size1of7
+        .d4-soft-right
+          .o-small-user-photo.d2-push-bottom
+            a href="/profiles/#{q.user_id}"
+              img src="#{q.user_avatar}"
+          a.sk-blue-decorated-link.sk-comment href="/profiles/#{q.user_id}"
+            = q.user_name
+          .light.push-top.sk-comment
+            = " #{q.user_type}"
+      .d-grid.size6of7
+
+        .d2-push-bottom
+          .st-unitRight.light
+            = q.created_date
+
+          .d2-push-ends.sk-middle-title
+            = q.topic
+          .d2-push-top.light.sk-comment
+            = [q.car_full_name, q.alternative_name].exclude("").join " "
+            - if q.year_of_production != "" && q.year_of_production != null
+              = " #{q.year_of_production} г.в."
+
+          .d2-push-top
+            - if q.photos.length > 0
+              - qpc = q.photos.length
+              - fp = q.photos.shift()
+              .js-question-gallery
+                a.sk-blue-decorated-link.sk-comment href="#{fp}"
+                  = "Фотографий: #{qpc}"
+                - for p in q.photos
+                  a href="#{p}"
+
+          .d4-push-top.light
+            == q.body.replace(/\n/g, "<br />")
+
+          .clear
+          - if q.tags.length > 0
+            .light.st-unitLeft.d2-push-bottom.d2-push-top
+              = "Теги: "
+              - for t in q.tags
+                a.sk-blue-decorated-link.sk-comment.push-sides href="/questions?tag=#{encodeURI(t)}"
+                  = t
+          .st-unitRight.d2-soft-ends
+            .st-unitRight
+              button.o-big-button.sk-blue-button.d4-push-left.js-answer-show data-id="#{q.id}"
+                | Ответить
+            .d2-push-top.st-unitRight.d2-push-left
+              - if q.answers_count >0
+                a.sk-blue-decorated-link.light data-id="#{q.id}" target="_blank" href="/questions/#{q.id}"
+                  | Смотреть ответы (#{q.answers_count})
+              - else
+                .light.st-unitRight.d2-push-bottom
+                  | Пока ответов нет
+                .clear
+            - if @current_user != "false" && @current_user_id != q.user_id
+              .d2-push-top.st-unitRight.d2-push-left
+                a.sk-blue-decorated-link.sk-comment.js-thanks href="javascript:void(0)" data-userid="#{q.user_id}"
+                  | Сказать спасибо
+              .d2-push-top.st-unitRight.d2-push-left
+                a.sk-blue-decorated-link.sk-comment.js-send-report href="javascript:void(0)" data-userid="#{q.user_id}"
+                  | Пожаловаться
+            .clear
+      .clear
+- else
+  .sk-search-form-title Ничего не найдено
+  .sk-cto-results-block.d3-soft-ends.d4-push-right.d2-push-top.d-grid-wrapper
+    .d-grid.size4of5
+      p
+        | Попробуйте смягчить условия поиска

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cto_id: 1
+  length: MyString
+  comment: MyString
+
+two:
+  cto_id: 1
+  length: MyString
+  comment: MyString

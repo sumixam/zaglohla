@@ -1,0 +1,15 @@
+.sk-widget-title.d2-push-bottom.d2-soft-bottom
+  | Популярные СТО
+- Cto.where(show_on_site: true).limit(30).shuffle.slice(0..1).each do |c|
+  .sk-widget-block.d3-soft-bottom.d-grid-wrapper.d2-soft-top
+    .d-grid.size1of3.st-widget-cto-photo
+      img src="#{c.main_photo.pic.url(:thumb)}"
+    .d-grid.size2of3
+      .d2-push-left
+        a.sk-form-results.light.d3-push-bottom.sk-blue-decorated-link href="/ctos/#{c.id}"
+          = c.name
+
+        .d2-push-ends.sk-comment
+          = [c.adress_street, c.adress_buildng, c.adress_comment, c.adress_additional].compact.join(", ")
+
+    .clear

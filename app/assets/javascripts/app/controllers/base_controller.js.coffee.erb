@@ -1,0 +1,54 @@
+class App.BaseController extends Spine.Controller
+
+  openPopup: (options = {}) ->
+    defaultOptions =
+      items:
+        type: 'inline'
+        src: @el
+
+    $.magnificPopup.open _.defaults(options, defaultOptions)
+
+  closePopup: ->
+    do $.magnificPopup.close
+
+  initSelect2: ->
+    $('.js-select2').select2()
+
+  gallery: ->
+    @openPopup
+      type: "image"
+      gallery:
+        enabled: true
+        preload: [0,2]
+        navigateByImgClick: true
+        arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>'
+        tPrev: 'Previous (Left arrow key)'
+        tNext: 'Next (Right arrow key)'
+        tCounter: '<span class="mfp-counter">%curr% of %total%</span>'
+
+  reinitStar: ->
+    $(".star").each ->
+      $readonly = ($(this).attr("data-readonly") is "true")
+      $(this).raty
+        score: ->
+          $(this).attr "data-rating"
+
+        number: ->
+          $(this).attr "data-star-count"
+
+        readOnly: $readonly
+        click: (score, evt) ->
+          _this = this
+          $.post "<%= Rails.application.class.routes.url_helpers.rate_path %>",
+            score: score
+            dimension: $(this).attr("data-dimension")
+            id: $(this).attr("data-id")
+            klass: $(this).attr("data-classname")
+          , (data) ->
+            if data
+
+              # success code goes here ...
+              if $(_this).attr("data-disable-after-rate") is "true"
+                $(_this).raty "set",
+                  readOnly: true
+                  score: score

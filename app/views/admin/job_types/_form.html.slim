@@ -1,0 +1,12 @@
+= form_for @job_type, url: @job_type.new_record? ? admin_job_types_path : admin_job_type_path(@job_type), :html => { :class => "form-horizontal" } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_job_types_path, :class => 'btn'
+coffee:
+  $(document).ready ->
+    $('.js-select2').select2()

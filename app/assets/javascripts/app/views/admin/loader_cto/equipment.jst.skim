@@ -1,0 +1,6 @@
+.js-equipment-row.d2-push-bottom
+  input.d2-push-right type="text" name="cto[equipment_ctos_attributes][][title]" placehoder="Наименование"
+  input.d2-push-right type="text" name="cto[equipment_ctos_attributes][][mark]" placeholder="Марка"
+  .js-equipment-rm.st-in-bl
+    button.btn.btn-danger
+      | -

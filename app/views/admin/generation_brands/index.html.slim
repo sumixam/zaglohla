@@ -1,0 +1,18 @@
+- @car_generations.each do |cg|
+  tr class="js-gnrs-#{cg.id}"
+    td
+      .st-unitLeft.d2-push-sides.js-generation-open data-status="closed" data-cid="#{cg.id}"
+        | +
+      .st-unitLeft.d2-push-sides
+        input.js-rm-all type="checkbox" name="cg-#{cg.id}" value="#{cg.id}" data-btype="generation"
+    td colspan="3"
+      | &nbsp;
+    td
+      strong
+        = cg.name
+    td
+      | &nbsp;
+    td
+      = link_to t('.edit', :default => t("helpers.links.edit")), edit_admin_generation_brand_path(cg), :class => 'btn btn-mini'
+      '
+      = link_to t('.destroy', :default => t("helpers.links.destroy")), admin_generation_brand_path(cg), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'

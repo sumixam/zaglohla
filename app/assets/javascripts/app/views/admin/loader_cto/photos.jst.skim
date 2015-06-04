@@ -1,0 +1,12 @@
+ul
+  - for i in @photos
+    li
+      img.js-photo-rem src="#{i.pic}" data-id="#{i.id}"
+      a.js-remove-photo data-id="#{i.id}"
+        | remove
+      br
+      - if i.main is true
+        input.js-main-photo type="checkbox" name="main_photo[#{i.id}]" value="#{i.id}" checked="checked"
+      - else
+        input.js-main-photo type="checkbox" name="main_photo[#{i.id}]" value="#{i.id}"
+      | Основное фото

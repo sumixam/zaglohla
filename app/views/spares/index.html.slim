@@ -1,0 +1,42 @@
+.spares-module.d-grid-wrapper.js-spares
+  .d-grid.size7of10
+    .d4-push-right
+      h2.sk-big-title.d3-push-ends.light.sk-spares-title.d3-soft-bottom
+        | Поиск запчастей
+      p.sk-landing-description-text
+        | Сейчас на нашем сайте система поиска запчастей работает в тестовом режиме. Пока доступен только поиск по совпадениям каталожных номеров, фирм и наименований. Чтобы с большой долей вероятности найти то, что вам нужно, максимально конкретизируйте свой запрос, например - "передний амортизатор Renault Logan Kayaba", а лучше всего введите уникальный номер детали, например 333741.
+      p.sk-landing-description-text.d4-push-top
+        | В данный момент мы готовим полную версию поисковика запчастей, где будет подробный и удобный каталог с иллюстрациями. Следите за обновлениями!
+      .d2-push-right.d7-push-top.push-left
+        .search-cto-form-module.d4-soft-top.d5-soft-bottom.d3-soft-sides.sk-search-form.d-grid-wrapper.sk-super-border
+          .sk-search-form-title Найти запчасти:
+          form.d3-soft-top action="/spares/search" method="POST"
+            = tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token)
+            .d-grid.size5of6.d-grid-wrapper
+              input.o-main-input.sk-main-input.d-grid.size16of17 name="term"
+              .clear
+            .d-grid.size1of6
+              button.o-big-button.sk-blue-button.push-none Найти
+            .clear
+        .clear
+
+  .d-grid.size3of10
+    .widget-module.sk-widget-module.st-unitRight.d4-push-bottom
+      = render "layouts/partials/widget/repair_request"
+    .widget-module.sk-widget-module.st-unitRight.d4-push-bottom
+      = render "layouts/partials/widget/new_questions"
+
+    .clear
+  .clear
+  .d-grid.size7of10.d5-push-top
+    .d4-push-right
+      .d4-push-ends.d3-soft.d6-soft-bottom.sk-landing-description.sk-landing-description-text
+        .d-grid.size1of6
+          .sk-idea-icon.o-idea-icon
+        .d-grid.size5of6
+          | Если вы не знаете точно, что именно вышло из строя в вашем автомобиле, задайте об этом вопрос экспертам или почитайте полезные статьи в нашей энциклопедии «АвтоВики».
+        .clear
+  .clear
+
+coffee:
+  new App.SparesController(el: '.js-spares')

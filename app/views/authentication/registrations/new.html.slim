@@ -1,0 +1,51 @@
+.modal-window-module.sk-modal-window
+  .sk-big-title
+    |  Быстрая регистрация на zaglohla.ru
+  .sk-user-card-title.d4-soft-top.d2-push-top.d-grid-wrapper
+
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name), remote: true) do |f|
+
+      = devise_error_messages!
+      .d-grid.size1of2.d2-push-top
+        = f.label :email
+        br
+        = f.email_field :email, :autofocus => true, class: 'sk-main-input o-main-input'
+      .d-grid.size1of2.d2-push-top
+        | Error message
+      .clear
+
+      .d-grid.size1of2.d2-push-top
+        = f.label :name
+        br
+        = f.text_field :name, :autofocus => true, class: 'sk-main-input o-main-input'
+      .d-grid.size1of2.d2-push-top
+        | Error message
+      .clear
+
+      .d-grid.size1of2.d2-push-top
+        = f.label :password
+        br
+        = f.password_field :password, class: 'sk-main-input o-main-input'
+      .d-grid.size1of2.d2-push-top
+        | Error message
+      .clear
+
+      .d-grid.size1of2.d2-push-top
+        = f.label :password_confirmation
+        br
+        = f.password_field :password_confirmation, class: 'sk-main-input o-main-input'
+
+      .d-grid.size1of2.d2-push-top
+        | Error message
+      .clear
+
+
+      div
+        = f.submit "Sign up"
+      .sk-user-card-title
+        .d5-push-top
+          = link_to 'Facebook', user_omniauth_authorize_path(:facebook), class: 'o-big-button sk-blue-button'
+        .d4-push-top
+          = link_to 'Vk', user_omniauth_authorize_path(:vkontakte), class: 'o-big-button sk-blue-button'
+
+

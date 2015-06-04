@@ -1,0 +1,375 @@
+= form_for @cto, url: @cto.new_record? ? admin_loader_ctos_path : admin_loader_cto_path(@cto), :html => { :class => "form-horizontal js-loader-cto loader-cto-edit-module" } do |f|
+  = f.hidden_field :administrator_id, value: current_administrator.id
+  .control-group
+    = f.label 'Название СТО', :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .control-group
+    = f.label 'Город', :class => 'control-label'
+    .controls
+      = f.select :city_id, City.all.map{ |c| [c.name, c.id] }, {}, :class => 'select_field js-city'
+  .control-group.js-districts
+    = f.label 'Районы', :class => 'control-label'
+    .controls.js-controls
+      - District.all.each do |d|
+        label.push-sides.st-unitLeft.st-column-check.st-bl
+          = check_box_tag "cto[cto_districts_attributes][][district_id]", d.id, @cto.districts.include?(d)
+          span.check-special
+            = d.name
+      .clear
+  .control-group.js-metro
+    = f.label 'Станции метро', :class => 'control-label'
+    .controls.js-controls
+      - MetroStation.all.each do |d|
+        label.push-sides.st-unitLeft.st-column-check.st-bl
+          = check_box_tag "cto[cto_metro_stations_attributes][][metro_station_id]", d.id, @cto.metro_stations.include?(d)
+          span.check-special
+            = d.name
+      .clear
+  .control-group
+    = f.label "Адрес", :class => 'control-label'
+    .controls
+      = f.text_field :adress_street, :class => 'text_field js-street', :placeholder => 'Улица, проспект и т.д.'
+      = f.text_field :adress_buildng, :class => "text_field js-building d2-push-left st-address-input", :placeholder => 'Дом'
+      = f.text_field :adress_additional, :class => "text_field js-adds d2-push-left st-address-input", :placeholder => 'Корп./лит.'
+      br
+      = f.text_field :adress_comment, :class => 'text_field', :class => "d2-push-top", :placeholder => 'Примечание к адресу'
+      a.js-place-on-maps.d2-push-left
+        | Установить на карте
+  .control-group
+    #ymap.d4-push-left style="width: 380px; height: 380px;"
+    = f.hidden_field :lat, class: "js-lat"
+    = f.hidden_field :lon, class: "js-lon"
+  .control-group
+    = f.label 'Телефон', :class => 'control-label'
+    .controls
+      | +7
+      = f.text_field :phone, :class => 'text_field js-phone push-left', placeholder: '(xxx) xxx-xx-xx'
+  .control-group
+    = f.label 'Дополнительные телефоны', :class => 'control-label'
+    .controls
+      div.d2-push-bottom
+        | +7
+        = f.text_field :additional_phone_1, :class => 'text_field js-phone push-left', placeholder: '(xxx) xxx-xx-xx'
+      div.d2-push-bottom
+        | +7
+        = f.text_field :additional_phone_2, :class => 'text_field js-phone push-left', placeholder: '(xxx) xxx-xx-xx'
+      div
+        | +7
+        = f.text_field :additional_phone_3, :class => 'text_field js-phone push-left', placeholder: '(xxx) xxx-xx-xx'
+  .control-group
+    = f.label 'Сайт', :class => 'control-label'
+    .controls
+      = f.text_field :site, :class => 'text_field js-site', placeholder: 'www.site.ru'
+  .control-group
+    = f.label 'Страница VK', :class => 'control-label'
+    .controls
+      = f.text_field :vk_page, :class => 'text_field st-full-input', placeholder: 'http://vk.com/...'
+  .control-group.js-work-hours
+    = f.label 'Время работы', :class => 'control-label'
+    .controls
+      .js-controls
+        - @cto.work_hours.each do |wh|
+          .js-work-hour-row.d2-push-bottom
+            select.o-small-admin-select.push-right name="cto[work_hours_attributes][][weekday_start]"
+              - ['пн', 'вт', 'ср', 'чт', 'пт', 'cб', 'вс'].each do |d|
+                - if wh.weekday_start == d
+                  option selected="selected"
+                    = d
+                - else
+                  option
+                    = d
+            | -
+            select.o-small-admin-select.push-sides name="cto[work_hours_attributes][][weekday_finish]"
+              - ['пн', 'вт', 'ср', 'чт', 'пт', 'cб', 'вс'].each do |d|
+                - if wh.weekday_finish == d
+                  option selected="selected"
+                    = d
+                - else
+                  option
+                    = d
+
+            select.o-small-admin-select.push-sides.d4-push-left name="cto[work_hours_attributes][][time_start]"
+              - 24.times do |i|
+                - if wh.time_start == "#{i}:00"
+                  option selected="selected"
+                    = "#{i}:00"
+                - else
+                  option
+                    = "#{i}:00"
+            | -
+            select.o-small-admin-select.push-sides name="cto[work_hours_attributes][][time_finish]"
+              - 24.times do |i|
+                - if wh.time_finish == "#{i}:00"
+                  option selected="selected"
+                    = "#{i}:00"
+                - else
+                  option
+                    = "#{i}:00"
+            .js-work-hours-rm.st-in-bl
+              button.btn.btn-danger
+                | -
+      .js-add-work-hour
+        button.btn.btn-success
+          | +
+  .control-group
+    = f.label 'Работа с другими марками', class: "control-label"
+    .controls
+      = f.check_box :work_with_other_brands
+  .control-group
+    = f.label 'Категории транспортных средств', :class => 'control-label'
+    .controls
+      - CategoryAuto.all.each do |d|
+        label.push-sides.st-bl
+          = check_box_tag "cto[cto_category_autos_attributes][][category_auto_id]", d.id, @cto.category_autos.include?(d), class: 'js-category-auto'
+          span.check-special
+            = d.name
+        .clear
+        .js-brand-selection.d8-push-left class="js-brand-selection-#{d.id}" style="display: none"
+            .d2-push-rigth.st-unitLeft
+              = "Марки  "
+            select.js-brands-select2.d2-push-left.st-unitLeft class="js-brand-select-2-#{d.id}" name="cto[cto_car_brands_attributes][][car_brand_id]" multiple="multiple" style="width: 200px"
+              - d.car_brands.order(:name).each do |b|
+                - if @cto.car_brands.include?(b)
+                  option value="#{b.id}" selected="selected" class="js-brand-all #{b.local_brand ? "js-local-brand" : "js-foreight-brand"}"
+                    = b.name
+                - else
+                  option value="#{b.id}" class="js-brand-all #{b.local_brand ? "js-local-brand" : "js-foreight-brand"}"
+                    = b.name
+            .d2-push-sides.st-unitLeft
+              = " исключая  "
+            select.js-disbrands-select2.d2-push-sides.st-unitLeft class="js-rm-brand-select-2-#{d.id}" name="not_brands[]" multiple="multiple" style="width: 200px" data-ctoid="#{d.id}"
+              - d.car_brands.order(:name).each do |b|
+                option value="#{b.id}"
+                  = b.name
+            br
+            .clear
+            .d2-push-top
+              .d2-push-sides.st-unitLeft
+                = check_box_tag "select_all[]", d.id, false, class: "js-select-all", "data-id" => "#{d.id}"
+                = " Выбрать все "
+              .d2-push-sides.st-unitLeft
+                = check_box_tag "select_all[]", d.id, false, class: "js-select-local", "data-id" => "#{d.id}"
+                = " Только отечественные "
+              .d2-push-sides.st-unitLeft
+                = check_box_tag "select_all[]", d.id, false, class: "js-select-foreight", "data-id" => "#{d.id}"
+                = " Только иномарки "
+            .clear
+  .control-group.d-grid-wrapper
+    = f.label 'Виды работ', :class => 'control-label'
+    .controls
+      - JobType.all.each do |d|
+        label.push-sides.st-bl
+          = check_box_tag "cto[cto_job_types_attributes][][job_type_id]", d.id, @cto.job_types.include?(d), class: "js-job-type-checkbox", "data-id" => d.id
+          span.check-special
+            = d.name
+        .d4-push-left.js-sub-job-types class="js-sub-job-types-#{d.id}"
+          a.js-select-all-sub-job-types data-id="#{d.id}"
+              | Выбрать все
+        .d4-push-left.js-sub-job-types class="js-sub-job-types-#{d.id}" style="display: none"
+          - d.sub_job_types.each do |sht|
+            label.push-sides.st-bl
+            = check_box_tag "cto[sub_job_type_ctos_attributes][][sub_job_type_id]", sht.id, @cto.sub_job_types.include?(sht)
+            span.check-special
+              = sht.name
+      .other
+        = f.text_field :other_job_types, :class => 'text_field d-grid size1of1 d2-push-top st-work-type-another-input', placeholder: 'Если вид работ не найден - пишите его здесь, через запятую'
+  .control-group
+    = f.label 'Дополнительные услуги', :class => 'control-label'
+    .controls
+      - Service.all.each do |d|
+        label.checkbox-inline.push-sides.st-unitLeft.st-column-check.st-bl
+          = check_box_tag "cto[cto_services_attributes][][service_id]", d.id, @cto.services.include?(d)
+          span.check-special
+            = d.name
+      .clear
+  .control-group.d-grid-wrapper
+    = f.label 'Описание', :class => 'control-label'
+    .controls
+      = f.text_area :description, :class => 'text_field d-grid size1of1 st-description-textarea'
+  .control-group.d-grid-wrapper
+    = f.label 'Прайслист от СТО', :class => 'control-label'
+    .controls
+      = f.text_area :cto_pricelist, :class => 'text_field d-grid size1of1 st-description-textarea ckeditor js-pricelist-cto'
+  .control-group.js-pricelists
+    = f.label 'Наш прайс', :class => 'control-label'
+    .js-controls.controls
+      - @cto.pricelists.each do |g|
+        .js-pricelist-row.d2-push-bottom
+          input.push-right.st-address-input.js-date-input type="text" name="cto[pricelists_attributes][][checked_at]" placeholder="Дата" value="#{g.checked_at}"
+          input.push-left type="text" name="cto[pricelists_attributes][][description]" placeholder="Виды работ" value="#{g.description}"
+          input.push-left.st-address-input type="text" name="cto[pricelists_attributes][][price]" placeholder="Цена" value="#{g.price}"
+          input.push-left type="text" name="cto[pricelists_attributes][][comment]" placeholder="Комментарий" value="#{g.comment}"
+          .js-pricelist-rm.st-in-bl.push-left
+            button.btn.btn-danger
+              | -
+    .controls
+      button.btn.btn-success.js-add-pricelist
+        | +
+  .control-group.js-cto-shares
+    = f.label 'Акции', :class => 'control-label'
+    .js-controls.controls
+      - @cto.cto_shares.each do |g|
+        .js-cto-share-row.d2-push-bottom
+          input.push-right.st-address-input.js-date-input type="text" name="cto[cto_shares_attributes][][from_date]" placeholder="С даты" value="#{g.from_date}"
+          input.push-left.st-address-input.js-date-input type="text" name="cto[cto_shares_attributes][][to_date]" placeholder="По дату" value="#{g.to_date}"
+          input.push-left type="text" name="cto[cto_shares_attributes][][description]" placeholder="Описание"  value="#{g.description}"
+          - if g.anytime
+            input.push-left type="checkbox" name="cto[cto_shares_attributes][][anytime]" checked="checked"
+          - else
+            input.push-left type="checkbox" name="cto[cto_shares_attributes][][anytime]"
+          span
+            | Бессрочная
+          .js-cto-share-rm.st-in-bl.push-left
+            button.btn.btn-danger
+              | -
+    .controls
+      button.btn.btn-success.js-add-cto-share
+        | +
+  .control-group
+    = f.label 'Лицензии и сертификаты', :class => 'control-label'
+    .controls
+      div
+        = f.check_box :gov_certificate
+        span.check-special Государственная на вид деятельности
+      div
+        = f.check_box :manufacture_certificate
+        span.check-special От производителя
+        br
+        br
+        = f.text_field :manufacture_certificate_list, :class => 'text_field st-full-input js-manual-certs', placeholder: 'Введите бренды, через запятую', "data-certs" => ManufactureCert.all.map(&:name).join(",")
+  .control-group.js-guarantee
+    = f.label 'Гарантия на работы', :class => 'control-label'
+    .js-controls.controls
+      - @cto.guarantee_ctos.each do |g|
+        .js-guarantee-row.d2-push-bottom
+          input.push-right type="text" name="cto[guarantee_ctos_attributes][][length]" value="#{g.length}" placeholder="Время"
+          input.d2-push-left type="text" name="cto[guarantee_ctos_attributes][][comment]" placeholder="Комментарий" value="#{g.comment}"
+          .js-guarantee-rm.st-in-bl.push-left
+            button.btn.btn-danger
+              | -
+    .controls
+      button.btn.btn-success.js-add-guarantee
+        | +
+  .control-group.js-equipment
+    = f.label 'Оборудование', :class => 'control-label'
+    .js-controls.controls
+      - @cto.equipment_ctos.each do |e|
+        .js-equipment-row.d2-push-bottom
+          input.d2-push-right type="text" name="cto[equipment_ctos_attributes][][title]" placehoder="Наименование" value="#{e.title}"
+          input.d2-push-right type="text" name="cto[equipment_ctos_attributes][][mark]" placeholder="Марка" value="#{e.mark}"
+          .js-equipment-rm.st-in-bl
+            button.btn.btn-danger
+              | -
+    .controls
+      button.btn.btn-success.js-add-equipment
+        | +
+  .control-group
+    = f.label 'Прием клиентов', :class => 'control-label'
+    .controls
+      = f.radio_button :sign_on_time, true
+      span.check-special.d4-push-right Строго по записи
+      br
+      = f.radio_button :sign_on_time, false
+      span.check-special Можно без записи
+  .control-group
+    = f.label 'Вместимость ремзоны', :class => 'control-label'
+    .controls
+      = f.text_field :boxsize, :class => 'text_field'
+  .control-group
+    = f.label 'Скидки для пользователей Zaglohla.ru', :class => 'control-label'
+      span
+        | Скидки для пользователей Zaglohla.ru
+    .controls
+      = f.text_field :sale_percent, :class => 'text_field', placeholder: "Размер скидки"
+      = f.text_field :sale_comment, :class => 'text_field d2-push-sides st-column-check', placeholder: 'Комментарий'
+  .control-group
+    = f.label 'Программа для управления СТО', :class => 'control-label'
+    .controls
+      - ControlProgramm.all.each do |d|
+        label.push-sides.st-bl
+          = check_box_tag "cto[cto_control_programms_attributes][][control_programm_id]", d.id, @cto.control_programms.include?(d)
+          span.check-special
+            = d.name
+      .other.d3-push-top
+        = f.text_field :other_control_programm, :class => 'text_field', placeholder: 'Введите программу'
+  .control-group
+    = f.label :email, :class => 'control-label'
+    .controls
+      = f.text_field :email, :class => 'text_field st-full-input'
+  .control-group
+    = f.label 'Год начала работы СТО', :class => 'control-label'
+    .controls
+      = f.select :start_from_year, (1970..Date.today.year).to_a, include_blank: true
+  .control-group
+    = f.label 'Контактное лицо', :class => 'control-label'
+    .controls
+      = f.text_field :contact_person, :class => 'text_field st-full-input', placeholder: 'ФИО'
+  .control-group
+    = f.label 'Официальный дилер', :class => 'control-label'
+    .controls
+      = f.check_box :official_diler, :class => 'text_field'
+  .control-group
+    = f.label 'Варианты оплаты', :class => 'control-label'
+    .controls
+      label.st-bl
+        = f.check_box :payment_cash
+        span.check-special.d4-push-right Наличные
+
+      label.st-bl
+        = f.check_box :payment_card
+        span.check-special.d4-push-right Банковские карты
+
+      label.st-bl
+        = f.check_box :payment_bill
+        span.check-special.d4-push-right Безнал (для юрлиц)
+  .control-group
+    = f.label 'Заинтересованность в коммерческом сотрудничестве', :class => 'control-label'
+    .controls
+      label.st-bl
+        = f.radio_button :intresting_to_work, 3
+        span.check-special.d4-push-right Высокая
+      label.st-bl
+        = f.radio_button :intresting_to_work, 2
+        span.check-special.d4-push-right Средняя
+      label.st-bl
+        = f.radio_button :intresting_to_work, 1
+        span.check-special.d4-push-right Низкая
+  .control-group
+    = f.label 'Рейтинг', :class => 'control-label'
+    .controls
+      = f.text_field :rating, :class => 'text_field st-full-input'
+  .control-group
+    = f.label 'Экспертный Рейтинг', :class => 'control-label'
+    .controls
+      = @cto.expert_rating
+  - unless @cto.new_record?
+    .control-group
+      = f.label 'Мастера', :class => 'control-label'
+      .controls
+        ul
+          - @cto.masters.each do |m|
+            li
+              a href="/profiles/#{m.id}"
+                = m.name
+  .control-group
+    = f.label 'Отображать на сайте', :class => 'control-label'
+    .controls
+      = f.check_box :show_on_site, :class => 'text_field', placeholder: 'ФИО'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary d3-push-right'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_loader_ctos_path, :class => 'btn'
+
+- unless @cto.new_record?
+  h3
+    | Загрузчик фотографий
+  .js-current-photos
+  = form_for Photo.new, :html => {:multipart => true}, url: admin_photos_path do |f|
+    = f.hidden_field :imageable_id, value: @cto.id, class: 'js-cto-id'
+    = f.hidden_field :imageable_type, value: "Cto"
+    .control-group
+      = f.file_field :photo, class: 'js-photo-cto-upload'
+
+coffee:
+  new App.LoaderCto(el: '.js-loader-cto')

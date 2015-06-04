@@ -1,0 +1,12 @@
+= link_to current_user.name, profile_path(current_user)
+.st-user-menu-border.soft-sides
+  | |
+.st-registration-icons.st-in-bl
+  - if current_user.present? && current_user.mycar.present?
+    a.o-menu-auto-icon.sk-cover.st-auto-icon.d2-push-sides href="/cars/#{current_user.mycar.id}" class="sk-my-car-#{current_user.mycar.try(:car_brand).try(:slug)} sk-my-car-default"
+    - if session[:car_highlight]
+      span.st-head-unread-count.sk-head-unread-count
+        | !
+  - else
+    a.o-menu-auto-icon.sk-cover.st-auto-icon.d2-push-sides href="/cars" class="sk-my-car-#{current_user.mycar.try(:car_brand).try(:slug)} sk-my-car-default"
+  = link_to "", destroy_user_session_path, method: :delete, class: "o-menu-icon sk-logout-icon st-logout-ic"

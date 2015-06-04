@@ -1,0 +1,20 @@
+= form_for @car_brand, url: @car_brand.new_record? ? admin_brand_brands_path : admin_brand_brand_path(@car_brand), :html => { :class => "form-horizontal" } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .control-group
+    = f.label :local_brand, :class => 'control-label'
+    .controls
+      = f.check_box :local_brand, :class => 'text_field'
+  .control-group
+    = f.label :car_brand_category_autos_attributes, :class => 'control-label'
+    .controls
+      = select_tag "category_auto_id", options_from_collection_for_select(CategoryAuto.all, 'id', 'name', @car_brand.category_autos.first.try(:id)), class: 'js-select2'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_brands_path, :class => 'btn'
+coffee:
+  $(document).ready ->
+    $('.js-select2').select2()

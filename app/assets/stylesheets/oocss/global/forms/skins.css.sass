@@ -1,0 +1,198 @@
+@import "oocss/global/colors"
+@import "oocss/global/forms/mixins"
+@import "oocss/global/icons/patterns"
+
+.sk-main-input
+  border-radius: 4px
+  border: 1px solid $grey-border
+  line-height: 18px
+  margin: 0
+
+.sk-remember-check-label, .sk-agree-check-label
+  position: relative
+  left: 1px
+  top: 1px
+
+.sk-agree-check-label
+  font-size: 10px
+
+.sk-search-form, .sk-search-light-form
+  background: white
+  font-weight: 100
+
+.sk-search-form-title
+  font-weight: bold
+  font-size: 16px
+  padding-bottom: 10px
+  color: #283a4f
+
+.sk-search-landing-title
+  font-weight: bold
+  font-size: 16px
+  color: #283a4f
+  line-height: 30px
+
+.sk-error
+  border-color: #fe622f
+  background-color: white
+  &.no-validate
+    border: solid 1px #cdd2d7
+
+.sk-error-title
+  color: #fe622f
+
+.sk-main-select.sk-error .select2-choice
+  border-color: #fe622f !important
+  background-color: white
+  &.no-validate
+    border: solid 1px #cdd2d7
+
+.sk-blue-container
+  border-bottom: 2px solid $blue-top
+
+.sk-orange-container
+  border-top: 2px solid $orange-clear
+
+.sk-main-select
+  font-weight: 100
+  .select2-choice
+    border-radius: 4px
+    border: 1px solid $grey-border
+    line-height: 18px
+    box-shadow: none
+    background: $white
+    color: $select2-choice
+
+    .select2-arrow
+      background: $white
+      border: none
+
+  .select2-drop-mask
+    border-radius: 4px
+    border: 1px solid $grey-border
+    line-height: 18px
+
+  &.select2-container-active
+    .select2-choice
+      background: $white
+      border: 1px solid $grey-border
+  &.select2-dropdown-open
+    .select2-choice
+      border-radius: 4px 4px 0 0
+
+.sk-main-input.select2-container-multi
+  .select2-choices
+    border: none
+    background-image: none
+
+    .select2-search-choice, .select2-search-field input
+      box-shadow: none
+
+
+.sk-main-input.select2-container-multi.select2-container-active
+  .select2-choices
+    box-shadow: none
+
+.select2-drop-active
+  border: 1px solid $grey-border
+  border-top: none
+
+.select2-results
+  margin: 0
+  padding: 0 0 4px 0
+
+  li
+    padding: 4px
+
+    &.select2-highlighted
+      +dropdown-line-skin($blue-main, $blue-top, $blue-bottom, $white)
+
+.select2-search
+  padding: 0
+  input
+    border: none
+    box-shadow: inset 0px 9px 8px -10px #cccccc, inset 0px -9px 8px -10px #cccccc
+
+.sk-checkbox-ic
+  @extend %checkbox-ic
+.sk-checkbox-input:checked + .sk-checkbox-ic
+  @extend %checkbox-ic-checked
+
+.sk-checkbox-label
+  color: $checkbox-label
+  vertical-align: middle
+  font-size: 10px
+  line-height: 12px
+
+  &.sk-small-check
+    font-size: 11px
+    line-height: 14px
+
+.select2-container .select2-choice .select2-arrow b
+  background-image: asset-url('select2x2.png') !important
+
+.sk-main-input
+  .select2-default
+    color: $blackest-black !important
+    font-weight: 100
+
+//refactor if you want
+
+.sk-search-form-top
+  background: #d1e0ea
+  border: 1px solid #ddddcc
+  border-top-color: rgb(229, 229, 221)
+  border-top-style: solid
+  border-top-width: 1px
+  border-right-color: rgb(221, 221, 204)
+  border-right-style: solid
+  border-right-width: 1px
+  border-bottom-color: rgb(204, 204, 187)
+  border-bottom-style: solid
+  border-bottom-width: 1px
+  border-left-color: rgb(221, 221, 204)
+  border-left-style: solid
+  border-left-width: 1px
+  border-radius: 0px 0px 8px 8px
+  border-top-left-radius: 0px
+  border-top-right-radius: 0px
+  border-bottom-right-radius: 8px
+  border-bottom-left-radius: 8px
+  border-color: #e5e5dd #ddddcc #ccccbb
+  border-top-color: rgb(229, 229, 221)
+  border-right-color: rgb(221, 221, 204)
+  border-bottom-color: rgb(204, 204, 187)
+  border-left-color: rgb(221, 221, 204)
+  box-shadow: 0px 1px 5px rgba(120, 120, 70, 0.3)
+
+.sk-form-cto-page-search
+  min-height: 170px
+  opacity: 0
+
+.sk-search-form
+  -webkit-border-radius: 4px
+  border-top-left-radius: 4px
+  border-top-right-radius: 4px
+  border-bottom-right-radius: 4px
+  border-bottom-left-radius: 4px
+  -moz-border-radius: 4px
+  border-radius: 4px
+  border-top-left-radius: 4px
+  border-top-right-radius: 4px
+  border-bottom-right-radius: 4px
+  border-bottom-left-radius: 4px
+  overflow: hidden
+  overflow-x: hidden
+  overflow-y: hidden
+  -webkit-box-shadow: -1px 0 0 0 #d2d2d2, -1px 0 0 0 #e6e6e6, 1px 0 0 0 #d2d2d2, 2px 0 0 0 #e6e6e6, 0 -1px 0 0 #e8e8e8, 0 2px 0 0 rgba(241, 241, 241, 0.3), 0 1px 0 0 #b1b1b1
+  -moz-box-shadow: -1px 0 0 0 #d2d2d2, -1px 0 0 0 #e6e6e6, 1px 0 0 0 #d2d2d2, 2px 0 0 0 #e6e6e6, 0 -1px 0 0 #e8e8e8, 0 2px 0 0 rgba(241, 241, 241, 0.3), 0 1px 0 0 #b1b1b1
+  box-shadow: -1px 0 0 0 #d2d2d2, -1px 0 0 0 #e6e6e6, 1px 0 0 0 #d2d2d2, 2px 0 0 0 #e6e6e6, 0 -1px 0 0 #e8e8e8, 0 2px 0 0 rgba(241, 241, 241, 0.3), 0 1px 0 0 #b1b1b1
+
+.sk-super-border
+  .sk-main-input
+    border: 1px solid #b0b0b0
+    color: #b0b0b0
+  .sk-main-select
+    .select2-choice
+      border: 1px solid #b0b0b0
+      color: #b0b0b0

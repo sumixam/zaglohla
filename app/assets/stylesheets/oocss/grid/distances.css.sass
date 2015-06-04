@@ -1,0 +1,97 @@
+$base-spacing-unit: 5px
+// $half-spacing-unit: $base-spacing-unit / 2
+
+@mixin gen-distance($times, $rule, $word)
+  $name: ""
+
+  $dist: $base-spacing-unit
+
+  @if $times > 1
+    $name: "d" + $times + "-"
+    $dist: $base-spacing-unit * $times
+
+  .#{$name}#{$word}
+    #{$rule}: $dist
+
+  .#{$name}#{$word}-top
+    #{$rule}-top: $dist !important
+
+  .#{$name}#{$word}-right
+    #{$rule}-right: $dist !important
+
+  .#{$name}#{$word}-bottom
+    #{$rule}-bottom: $dist !important
+
+  .#{$name}#{$word}-left
+    #{$rule}-left: $dist !important
+
+  .#{$name}#{$word}-ends
+    #{$rule}-top: $dist !important
+    #{$rule}-bottom: $dist !important
+
+  .#{$name}#{$word}-sides
+    #{$rule}-right: $dist !important
+    #{$rule}-left: $dist !important
+
+@mixin gen-push($times)
+  +gen-distance($times, margin, push)
+
+@mixin gen-soft($times)
+  +gen-distance($times, padding, soft)
+
+@for $i from 0 through 20
+  +gen-push($i)
+  +gen-soft($i)
+
+// .half-push
+//   margin: $half-spacing-unit
+
+// .half-push-top
+//   margin-top: $half-spacing-unit !important
+
+// .half-push-right
+//   margin-right: $half-spacing-unit
+
+// .half-push-bottom
+//   margin-bottom: $half-spacing-unit
+
+// .half-push-left
+//   margin-left: $half-spacing-unit
+
+// .half-push-ends
+//   margin-top: $half-spacing-unit
+//   margin-bottom: $half-spacing-unit
+
+// .half-push-sides
+//   margin-right: $half-spacing-unit
+//   margin-left: $half-spacing-unit
+
+// .half-soft
+//   padding: $half-spacing-unit
+
+// .half-soft-top
+//   padding-top: $half-spacing-unit !important
+
+// .half-soft-right
+//   padding-right: $half-spacing-unit
+
+// .half-soft-bottom
+//   padding-bottom: $half-spacing-unit
+
+// .half-soft-left
+//   padding-left: $half-spacing-unit
+
+// .half-soft-ends
+//   padding-top: $half-spacing-unit
+//   padding-bottom: $half-spacing-unit
+
+// .half-soft-sides
+//   padding-right: $half-spacing-unit
+//   padding-left: $half-spacing-unit
+
+.push-auto
+  margin: auto
+
+.zero-push
+  margin: 0
+

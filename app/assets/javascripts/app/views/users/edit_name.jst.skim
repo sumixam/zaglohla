@@ -1,0 +1,13 @@
+.modal-window-module.sk-modal-window
+  .st-unitRight.o-close-icon.sk-close-icon.mfp-close
+  .sk-user-card-title.d-grid-wrapper
+    form#edit_user_name.js-edit-user-name-form accept-charset="UTF-8" action="/profiles/#{@id}" method="post" data-remote="true"
+      .d-grid.size1of1.d3-soft-left.d2-soft-bottom.d-grid-wrapper
+        input type="hidden" name="_method" value="put"
+        .d2-push-top
+          input#user_email.sk-main-input.o-main-input.d-grid.size4of5 autofocus="autofocus" name="user[name]" type="text" value="#{@user.name}" placeholder="Имя"
+          .clear
+      .clear
+      .d2-push-top.sk-align-ct
+        input.o-edit-button.sk-blue-button name="commit" type="submit" value="Сохранить"
+        .clear

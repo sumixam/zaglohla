@@ -1,0 +1,17 @@
+Здравствуйте!
+
+Рассмотрите, пожалуйста, заявку на ремонт, которую заполнил Ваш потенциальный клиент на нашем сайте:
+
+Имя: <%= @invoice.name %>
+Телефон: <%= @invoice.phone %>
+Email: <%= @invoice.email %>
+Машина: <%= @invoice.car_full_name %>
+Пробег: <%= @invoice.run_km %>
+Описание:
+<%= @invoice.text %>
+
+Время приема: <%= @invoice.view_date_formated %> <%= @invoice.view_time %>
+
+
+С уважением,
+команда Заглохла.ру

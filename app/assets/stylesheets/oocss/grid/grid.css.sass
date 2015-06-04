@@ -1,0 +1,34 @@
+.size1of1
+  float: none
+  width: 100%
+
+@mixin gen-grid($columns)
+  @for $i from 1 through $columns - 1
+    .size#{$i}of#{$columns}
+      width: #{100 / $columns * $i + "%"}
+
++gen-grid(2)
++gen-grid(3)
++gen-grid(4)
++gen-grid(5)
++gen-grid(6)
++gen-grid(7)
++gen-grid(8)
++gen-grid(9)
++gen-grid(10)
++gen-grid(11)
++gen-grid(12)
++gen-grid(17)
++gen-grid(20)
++gen-grid(25)
+
+
+.d-grid-wrapper
+  overflow: hidden
+
+  .d-grid
+    float: left
+    box-sizing: border-box
+
+    &.st-unitRight
+      float: right

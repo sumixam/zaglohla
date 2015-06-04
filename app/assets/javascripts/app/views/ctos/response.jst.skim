@@ -1,0 +1,13 @@
+h2.sk-modal-title-big.push-none
+  | Новый отзыв
+
+.sk-modal-body.d3-push-top
+  .sk-middle-title.d3-soft-top.d2-push-top
+    .js-rating-container.d2-push-ends
+    textarea.sk-main-input.o-main-textarea.size1of1.d4-push-bottom placeholder="Оставьте отзыв"
+    button.st-unitRight.o-entry-button.sk-blue-button
+      | Отправить отзыв
+
+    .clear
+
+

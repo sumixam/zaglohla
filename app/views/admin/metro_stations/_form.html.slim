@@ -1,0 +1,9 @@
+= form_for @metro_station, url: @metro_station.new_record? ? admin_metro_stations_path : admin_metro_station_path(@metro_station), :html => { :class => "form-horizontal" } do |f|
+  .control-group
+    = f.label :name, :class => 'control-label'
+    .controls
+      = f.text_field :name, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), admin_metro_stations_path, :class => 'btn'

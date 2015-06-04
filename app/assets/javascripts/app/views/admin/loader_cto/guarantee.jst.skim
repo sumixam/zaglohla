@@ -1,0 +1,6 @@
+.js-guarantee-row.d2-push-bottom
+  input.push-right type="text" name="cto[guarantee_ctos_attributes][][length]" placeholder="Время"
+  input.d2-push-left type="text" name="cto[guarantee_ctos_attributes][][comment]" placeholder="Комментарий"
+  .js-guarantee-rm.st-in-bl.push-left
+    button.btn.btn-danger
+      | -

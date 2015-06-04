@@ -1,0 +1,13 @@
+.d2-push-top.d20-push-left
+  #loaderG.d10-push-left
+    #loaderG_1.loaderG
+    #loaderG_2.loaderG
+    #loaderG_3.loaderG
+    #loaderG_4.loaderG
+    #loaderG_5.loaderG
+    #loaderG_6.loaderG
+    #loaderG_7.loaderG
+    #loaderG_8.loaderG
+.d6-push-top.light.sk-align-ct
+  | Ищем лучшие СТО...
+
