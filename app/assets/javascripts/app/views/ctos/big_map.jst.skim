@@ -1,6 +1,0 @@
-.modal-window-module-large.sk-modal-window
-  #bigymap  style="width: 740px; height: 600px;"
-  .clear
-  .d2-push-top
-    a.sk-blue-decorated-link.js-close-popup href="javascript:$.magnificPopup.close()"
-      | Свернуть большую карту

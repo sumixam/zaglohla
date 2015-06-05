@@ -1,4 +1,0 @@
-- for i in @brands
-  .push-sides
-    input type="checkbox" name="cto[cto_car_brands_attributes][][car_brand_id]" value="#{i.id}"
-    = i.name

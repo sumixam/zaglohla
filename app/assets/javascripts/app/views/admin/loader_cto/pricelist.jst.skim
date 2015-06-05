@@ -1,8 +1,0 @@
-.js-pricelist-row.d2-push-bottom
-  input.push-right.st-address-input.js-date-input type="text" name="cto[pricelists_attributes][][checked_at]" placeholder="Дата"
-  input.push-left type="text" name="cto[pricelists_attributes][][description]" placeholder="Виды работ"
-  input.push-left.st-address-input type="text" name="cto[pricelists_attributes][][price]" placeholder="Цена"
-  input.push-left type="text" name="cto[pricelists_attributes][][comment]" placeholder="Комментарий"
-  .js-pricelist-rm.st-in-bl.push-left
-    button.btn.btn-danger
-      | -

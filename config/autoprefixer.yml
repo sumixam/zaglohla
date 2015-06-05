@@ -1,5 +1,0 @@
-browsers:
-  - "last 1 version"
-  - "> 1%"
-  - "explorer 7"
-  - "firefox > 13"

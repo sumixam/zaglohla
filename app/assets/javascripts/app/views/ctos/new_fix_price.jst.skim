@@ -1,6 +1,0 @@
-.js-resp-row
-  input class="o-main-input size2of5 sk-main-input d2-push-top" name="cto_response[responce_fix_proces_attributes][][detail]" placeholder="Введите виды работ"
-  input class="o-main-input size2of5 sk-main-input d2-push-top d2-push-left" name="cto_response[responce_fix_proces_attributes][][price]" placeholder="Цена"
-  button.js-rem-row-resp.o-entry-button.sk-blue-button.d2-push-top.d2-push-left
-    | -
-  .clear
